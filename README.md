@@ -99,8 +99,6 @@ minikube addons enable metrics-server
 kubectl get deployment metrics-server -n kube-system
 ```
 
-
-
 #### To make docker the default driver:
 ```
 minikube config set driver docker
@@ -118,6 +116,8 @@ kubectl get pods
 ```
 kubectl delete pod pod_name
 ```
+
+
 
 ## Pod.yaml
 ```
@@ -137,6 +137,8 @@ curl http://127.0.0.1:8000
 exit
 ```
 
+
+
 ## Deployment.yaml 
 ```
 kubectl apply -f deployment.yaml
@@ -149,10 +151,12 @@ kubectl port-forward deployment/social-media-deployment 8000:8000
 ```
 
 ```
-kubectl create deployment my-app --image=link
-kubectl delete deployment my-app
-kubectl expose deployment my-app --type=LoadBalancer --port=80
+kubectl create deployment social-media-deployment --image=link
+kubectl delete deployment social-media-deployment
+kubectl expose deployment social-media-deployment --type=LoadBalancer --port=80
 ```
+
+
 
 ## Service.yaml (Require Deployment.yaml or Pod.yaml)
 ```
@@ -166,6 +170,8 @@ kubectl get service
 ```
 minikube service service_name
 ```
+
+
 
 ## Horizontal Pod Autoscaler (HPA)
 
