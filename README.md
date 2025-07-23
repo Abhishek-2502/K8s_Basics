@@ -72,9 +72,6 @@ minikube start --no-vtx-check
 
 #### Other Basics
 ```
-minikube addons enable metrics-server
-```
-```
 minikube dashboard
 ```
 ```
@@ -95,6 +92,14 @@ minikube unpause
 ```
 minikube stop
 ```
+
+#### Metrics Service
+```
+minikube addons enable metrics-server
+kubectl get deployment metrics-server -n kube-system
+```
+
+
 
 #### To make docker the default driver:
 ```
@@ -160,5 +165,44 @@ kubectl get service
 #### To access it via browser (on Minikube):
 ```
 minikube service service_name
+```
+
+## Horizontal Pod Autoscaler (HPA)
+
+#### This tells Kubernetes to:
+- Monitor CPU usage.
+- Keep pods between 1 and 5 replicas.
+- Scale out if CPU usage > 50%.
+
+```
+kubectl autoscale deployment social-media-deployment ^
+  --cpu-percent=50 ^
+  --min=1 ^
+  --max=5
+```
+
+#### Check the HPA status:
+```
+kubectl get hpa
+```
+
+#### Delete HPA
+```
+kubectl delete hpa social-media-deployment
+```
+
+#### Testing:
+```
+kubectl run -i --tty load-generator --rm ^
+  --image=busybox ^
+  -- /bin/sh
+
+while true; do wget -q -O- http://social-media-service:8000; done
+```
+
+Watch for replica count increasing:
+```
+kubectl get hpa -w
+kubectl get pods
 ```
 
