@@ -74,9 +74,6 @@ minikube start --no-vtx-check
 minikube addons enable metrics-server
 ```
 ```
-minikube start
-```
-```
 minikube dashboard
 ```
 ```
