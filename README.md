@@ -41,14 +41,12 @@ cd ~
 ```
 ```
 mkdir .kube
-```
-```
 cd .kube
-```
-```
 New-Item config -type file
 ```
-
+```
+kubectl config view
+```
 
 # MINIKUBE
 https://minikube.sigs.k8s.io/docs/start/?arch=%2Fwindows%2Fx86-64%2Fstable%2F.exe+download
@@ -57,6 +55,8 @@ https://minikube.sigs.k8s.io/docs/start/?arch=%2Fwindows%2Fx86-64%2Fstable%2F.ex
 ```
 choco install minikube
 ```
+
+### Start
 ```
 minikube start
 ```
@@ -70,6 +70,7 @@ minikube start --driver=virtualbox
 minikube start --no-vtx-check
 ```
 
+### Other Basics
 ```
 minikube addons enable metrics-server
 ```
@@ -95,26 +96,35 @@ minikube unpause
 minikube stop
 ```
 
-To make docker the default driver:
+### To make docker the default driver:
 ```
 minikube config set driver docker
 ```
 
-
-pod_name = social-media-fastapi
+### Get Pods
 ```
 kubectl get pods -A
 ```
 ```
 kubectl get pods
 ```
-```
-kubectl apply -f .\pod.yaml
-```
+
+### Delete Pod
 ```
 kubectl delete pod pod_name
 ```
 
+## Pod.yaml
+```
+kubectl apply -f .\pod.yaml
+```
+
+### Port Forward to Localhost
+```
+kubectl port-forward pod_name 8000:8000
+```
+
+### Test From Inside container
 ```
 kubectl exec -it pod_name -- /bin/bash
 apt update && apt install curl -y
@@ -122,6 +132,33 @@ curl http://127.0.0.1:8000
 exit
 ```
 
+## Deployment.yaml 
 ```
-kubectl port-forward pod_name 8000:8000
+kubectl apply -f deployment.yaml
 ```
+```
+kubectl get deployments
+```
+```
+kubectl port-forward deployment/social-media-deployment 8000:8000
+```
+
+```
+kubectl create deployment my-app --image=link
+kubectl delete deployment my-app
+kubectl expose deployment my-app --type=LoadBalancer --port=80
+```
+
+## Service.yaml (Require Deployment.yaml)
+```
+kubectl apply -f service.yaml
+```
+```
+kubectl get service
+```
+
+### To access it via browser (on Minikube):
+```
+minikube service service_name
+```
+
