@@ -149,7 +149,7 @@ kubectl delete deployment my-app
 kubectl expose deployment my-app --type=LoadBalancer --port=80
 ```
 
-## Service.yaml (Require Deployment.yaml)
+## Service.yaml (Require Deployment.yaml or Pod.yaml)
 ```
 kubectl apply -f service.yaml
 ```
