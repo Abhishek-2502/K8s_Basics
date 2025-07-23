@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: social-media-fastapi
+  labels:
+    app: social-media
+spec:
+  containers:
+    - name: fastapi-container
+      image: abhi25022004/social-media:latest
+      imagePullPolicy: IfNotPresent
+      ports:
+        - containerPort: 8000
+      resources:
+        limits:
+          memory: "200Mi"
+        requests:
+          memory: "100Mi"
