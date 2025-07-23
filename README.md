@@ -1,5 +1,5 @@
 # Docker
-### Build: 
+#### Build: 
 ```
 docker build -t social-media:latest .
 ```
@@ -22,7 +22,7 @@ Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManage
 # KUBERNETES
 https://kubernetes.io/docs/tasks/tools/install-kubectl-windows/#install-nonstandard-package-tools
 
-### Install
+#### Install
 ```
 choco install kubernetes-cli
 ```
@@ -30,12 +30,12 @@ choco install kubernetes-cli
 kubectl version --client
 ```
 
-If you're using cmd.exe: 
+#### If you're using cmd.exe: 
 ```
 cd %USERPROFILE%
 ```
 
-Otherwise: 
+#### Otherwise: 
 ```
 cd ~
 ```
@@ -51,12 +51,12 @@ kubectl config view
 # MINIKUBE
 https://minikube.sigs.k8s.io/docs/start/?arch=%2Fwindows%2Fx86-64%2Fstable%2F.exe+download
 
-### Install
+#### Install
 ```
 choco install minikube
 ```
 
-### Start
+#### Start
 ```
 minikube start
 ```
@@ -70,7 +70,7 @@ minikube start --driver=virtualbox
 minikube start --no-vtx-check
 ```
 
-### Other Basics
+#### Other Basics
 ```
 minikube addons enable metrics-server
 ```
@@ -96,12 +96,12 @@ minikube unpause
 minikube stop
 ```
 
-### To make docker the default driver:
+#### To make docker the default driver:
 ```
 minikube config set driver docker
 ```
 
-### Get Pods
+#### Get Pods
 ```
 kubectl get pods -A
 ```
@@ -109,7 +109,7 @@ kubectl get pods -A
 kubectl get pods
 ```
 
-### Delete Pod
+#### Delete Pod
 ```
 kubectl delete pod pod_name
 ```
@@ -119,12 +119,12 @@ kubectl delete pod pod_name
 kubectl apply -f .\pod.yaml
 ```
 
-### Port Forward to Localhost
+#### Port Forward to Localhost
 ```
 kubectl port-forward pod_name 8000:8000
 ```
 
-### Test From Inside container
+#### Test From Inside container
 ```
 kubectl exec -it pod_name -- /bin/bash
 apt update && apt install curl -y
@@ -157,7 +157,7 @@ kubectl apply -f service.yaml
 kubectl get service
 ```
 
-### To access it via browser (on Minikube):
+#### To access it via browser (on Minikube):
 ```
 minikube service service_name
 ```
