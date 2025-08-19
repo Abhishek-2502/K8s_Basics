@@ -84,6 +84,9 @@ minikube delete
 minikube delete --all
 ```
 ```
+minikube delete --all --purge
+```
+```
 minikube pause
 ```
 ```
@@ -158,7 +161,7 @@ kubectl expose deployment social-media-deployment --type=LoadBalancer --port=80
 
 
 
-## Service.yaml (Require Deployment.yaml or Pod.yaml)
+## Service.yaml (NOTE: Require Deployment.yaml or Pod.yaml)
 ```
 kubectl apply -f service.yaml
 ```
