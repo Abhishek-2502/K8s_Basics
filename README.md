@@ -12,6 +12,8 @@ docker tag social-media:latest abhi25022004/social-media:latest
 docker push abhi25022004/social-media:latest
 ```
 
+## Note: Run the following commands in CMD admin mode
+
 # CHOCOLATEY
 https://chocolatey.org/install
 
