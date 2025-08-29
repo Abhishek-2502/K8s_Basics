@@ -21,6 +21,9 @@ https://chocolatey.org/install
 Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
 ```
 
+
+
+
 # KUBERNETES
 https://kubernetes.io/docs/tasks/tools/install-kubectl-windows/#install-nonstandard-package-tools
 
@@ -49,6 +52,9 @@ New-Item config -type file
 ```
 kubectl config view
 ```
+
+
+
 
 # MINIKUBE
 https://minikube.sigs.k8s.io/docs/start/?arch=%2Fwindows%2Fx86-64%2Fstable%2F.exe+download
@@ -134,6 +140,7 @@ kubectl describe pods
 
 
 
+
 ## Pod.yaml
 
 #### Apply Pod from YAML
@@ -153,6 +160,7 @@ apt update && apt install curl -y
 curl http://127.0.0.1:8000
 exit
 ```
+
 
 
 
@@ -203,6 +211,11 @@ kubectl rollout status deployment deployment_name
 kubectl rollout undo deployment deployment_name 
 ```
 
+#### Scale
+```
+kubectl scale deployment deployment_name -replicas=5
+```
+
 
 
 
@@ -222,6 +235,7 @@ kubectl get service
 ```
 minikube service service_name
 ```
+
 
 
 
