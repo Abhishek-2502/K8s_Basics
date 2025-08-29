@@ -80,6 +80,9 @@ minikube start --no-vtx-check
 
 #### Other Basics
 ```
+minikube ip
+```
+```
 minikube dashboard
 ```
 ```
@@ -102,6 +105,9 @@ minikube unpause
 ```
 ```
 minikube stop
+```
+```
+minikube tunnel
 ```
 
 #### Metrics Service
@@ -229,6 +235,11 @@ kubectl apply -f service.yaml
 #### Get All Services
 ```
 kubectl get service
+```
+
+#### Delete a Service
+```
+kubectl delete service service_name
 ```
 
 #### To access it via browser (on Minikube):
