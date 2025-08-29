@@ -193,6 +193,16 @@ kubectl expose deployment deployment_name --type=LoadBalancer --port=80
 kubectl set image deployment deployment_name container_name=new_image_name:version
 ```
 
+#### Check status of Rollout
+```
+kubectl rollout status deployment deployment_name 
+```
+
+#### Rollback a Rollout
+```
+kubectl rollout undo deployment deployment_name 
+```
+
 
 
 
