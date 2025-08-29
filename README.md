@@ -122,9 +122,21 @@ kubectl get pods
 kubectl delete pod pod_name
 ```
 
+#### Get logs
+```
+kubectl logs pod_name
+```
+
+#### Get Pods info
+```
+kubectl describe pods
+```
+
 
 
 ## Pod.yaml
+
+#### Apply Pod from YAML
 ```
 kubectl apply -f .\pod.yaml
 ```
@@ -145,28 +157,53 @@ exit
 
 
 ## Deployment.yaml 
+
+#### Apply Deployment from YAML
 ```
 kubectl apply -f deployment.yaml
 ```
+
+#### Get All Deployments
 ```
 kubectl get deployments
 ```
+
+#### Port Forward to Deployment
 ```
-kubectl port-forward deployment/social-media-deployment 8000:8000
+kubectl port-forward deployment/deployment_name 8000:8000
 ```
 
+#### Create Deployment with Image
 ```
-kubectl create deployment social-media-deployment --image=link
-kubectl delete deployment social-media-deployment
-kubectl expose deployment social-media-deployment --type=LoadBalancer --port=80
+kubectl create deployment deployment_name --image=link
 ```
+
+#### Delete Deployment
+```
+kubectl delete deployment deployment_name
+```
+
+#### Expose Deployment as Service
+```
+kubectl expose deployment deployment_name --type=LoadBalancer --port=80
+```
+
+#### Update Deployment Image
+```
+kubectl set image deployment deployment_name container_name=new_image_name:version
+```
+
 
 
 
 ## Service.yaml (NOTE: Require Deployment.yaml or Pod.yaml)
+
+#### Apply Service from YAML
 ```
 kubectl apply -f service.yaml
 ```
+
+#### Get All Services
 ```
 kubectl get service
 ```
