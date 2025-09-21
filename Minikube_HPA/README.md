@@ -1,5 +1,11 @@
+# Installation (Windows)
+Install Minikube using the provided [file](Windows_Installation.md)
+
+# Installation (Linux)
+Install Minikube using the provided [file](Linux_Installation.md)
+
 # Docker
-#### Build: 
+### Build: 
 ```
 docker build -t social-media:latest .
 ```
@@ -12,59 +18,9 @@ docker tag social-media:latest abhi25022004/social-media:latest
 docker push abhi25022004/social-media:latest
 ```
 
-## Note: Run the following commands in CMD admin mode
+# MINIKUBE Commands
 
-# CHOCOLATEY
-https://chocolatey.org/install
-
-```
-Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
-```
-
-
-
-
-# KUBERNETES
-https://kubernetes.io/docs/tasks/tools/install-kubectl-windows/#install-nonstandard-package-tools
-
-#### Install
-```
-choco install kubernetes-cli
-```
-```
-kubectl version --client
-```
-
-#### If you're using cmd.exe: 
-```
-cd %USERPROFILE%
-```
-
-#### Otherwise: 
-```
-cd ~
-```
-```
-mkdir .kube
-cd .kube
-New-Item config -type file
-```
-```
-kubectl config view
-```
-
-
-
-
-# MINIKUBE
-https://minikube.sigs.k8s.io/docs/start/?arch=%2Fwindows%2Fx86-64%2Fstable%2F.exe+download
-
-#### Install
-```
-choco install minikube
-```
-
-#### Start
+### Start
 ```
 minikube start
 ```
@@ -78,7 +34,10 @@ minikube start --driver=virtualbox
 minikube start --no-vtx-check
 ```
 
-#### Other Basics
+### Other Basics
+```
+minikube version
+```
 ```
 minikube ip
 ```
@@ -110,18 +69,18 @@ minikube stop
 minikube tunnel
 ```
 
-#### Metrics Service
+### Metrics Service
 ```
 minikube addons enable metrics-server
 kubectl get deployment metrics-server -n kube-system
 ```
 
-#### To make docker the default driver:
+### To make docker the default driver:
 ```
 minikube config set driver docker
 ```
 
-#### Get Pods
+### Get Pods
 ```
 kubectl get pods -A
 ```
@@ -129,17 +88,17 @@ kubectl get pods -A
 kubectl get pods
 ```
 
-#### Delete Pod
+### Delete Pod
 ```
 kubectl delete pod pod_name
 ```
 
-#### Get logs
+### Get logs
 ```
 kubectl logs pod_name
 ```
 
-#### Get Pods info
+### Get Pods info
 ```
 kubectl describe pods
 ```
@@ -149,17 +108,17 @@ kubectl describe pods
 
 ## Pod.yaml
 
-#### Apply Pod from YAML
+### Apply Pod from YAML
 ```
 kubectl apply -f .\pod.yaml
 ```
 
-#### Port Forward to Localhost
+### Port Forward to Localhost
 ```
 kubectl port-forward pod_name 8000:8000
 ```
 
-#### Test From Inside container
+### Test From Inside container
 ```
 kubectl exec -it pod_name -- /bin/bash
 apt update && apt install curl -y
@@ -172,52 +131,52 @@ exit
 
 ## Deployment.yaml 
 
-#### Apply Deployment from YAML
+### Apply Deployment from YAML
 ```
 kubectl apply -f deployment.yaml
 ```
 
-#### Get All Deployments
+### Get All Deployments
 ```
 kubectl get deployments
 ```
 
-#### Port Forward to Deployment
+### Port Forward to Deployment
 ```
 kubectl port-forward deployment/deployment_name 8000:8000
 ```
 
-#### Create Deployment with Image
+### Create Deployment with Image
 ```
 kubectl create deployment deployment_name --image=link
 ```
 
-#### Delete Deployment
+### Delete Deployment
 ```
 kubectl delete deployment deployment_name
 ```
 
-#### Expose Deployment as Service
+### Expose Deployment as Service
 ```
 kubectl expose deployment deployment_name --type=LoadBalancer --port=80
 ```
 
-#### Update Deployment Image
+### Update Deployment Image
 ```
 kubectl set image deployment deployment_name container_name=new_image_name:version
 ```
 
-#### Check status of Rollout
+### Check status of Rollout
 ```
 kubectl rollout status deployment deployment_name 
 ```
 
-#### Rollback a Rollout
+### Rollback a Rollout
 ```
 kubectl rollout undo deployment deployment_name 
 ```
 
-#### Scale
+### Scale
 ```
 kubectl scale deployment deployment_name -replicas=5
 ```
@@ -227,22 +186,22 @@ kubectl scale deployment deployment_name -replicas=5
 
 ## Service.yaml (NOTE: Require Deployment.yaml or Pod.yaml)
 
-#### Apply Service from YAML
+### Apply Service from YAML
 ```
 kubectl apply -f service.yaml
 ```
 
-#### Get All Services
+### Get All Services
 ```
 kubectl get service
 ```
 
-#### Delete a Service
+### Delete a Service
 ```
 kubectl delete service service_name
 ```
 
-#### To access it via browser (on Minikube):
+### To access it via browser (on Minikube):
 ```
 minikube service service_name
 ```
@@ -252,7 +211,7 @@ minikube service service_name
 
 ## Horizontal Pod Autoscaler (HPA)
 
-#### This tells Kubernetes to:
+### This tells Kubernetes to:
 - Monitor CPU usage.
 - Keep pods between 1 and 5 replicas.
 - Scale out if CPU usage > 50%.
@@ -264,17 +223,17 @@ kubectl autoscale deployment social-media-deployment ^
   --max=5
 ```
 
-#### Check the HPA status:
+### Check the HPA status:
 ```
 kubectl get hpa
 ```
 
-#### Delete HPA
+### Delete HPA
 ```
 kubectl delete hpa social-media-deployment
 ```
 
-#### Testing:
+### Testing:
 ```
 kubectl run -i --tty load-generator --rm ^
   --image=busybox ^

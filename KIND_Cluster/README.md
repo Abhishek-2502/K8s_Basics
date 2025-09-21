@@ -1,28 +1,16 @@
 # KIND Cluster Setup Guide
 
 ## 1. Installing KIND and kubectl
-Install KIND and kubectl using the provided [script](https://github.com/Abhishek-2502/K8s_Basics/blob/main/KIND_Cluster/install.sh):
+Install KIND and kubectl using the provided [script](install.sh)
 
 ## 2. Setting Up the KIND Cluster
-Create a kind-config.yaml file:
+Create a kind-config.yaml file using the provided [file](kind-config.yaml)
 
-```yaml
-
-kind: Cluster
-apiVersion: kind.x-k8s.io/v1alpha4
-nodes:
-  - role: control-plane
-    image: kindest/node:v1.33.1
-  - role: worker
-    image: kindest/node:v1.33.1
-  - role: worker
-    image: kindest/node:v1.33.1
-```
 Create the cluster using the configuration file:
 
 ```bash
 
-kind create cluster --config kind-config.yaml --name tws-kind-cluster
+kind create cluster --config kind-config.yaml --name abhi-kind-cluster
 ```
 Verify the cluster:
 
@@ -47,29 +35,9 @@ Apply the Kubernetes Dashboard manifest:
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.7.0/aio/deploy/recommended.yaml
 ```
 Create an Admin User
-Create a dashboard-admin-user.yml file with the following content:
 
-```yaml
+Create a dashboard-admin-user.yml file using the provided [file](dashboard-admin-user.yml)
 
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: admin-user
-  namespace: kubernetes-dashboard
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRoleBinding
-metadata:
-  name: admin-user
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: cluster-admin
-subjects:
-- kind: ServiceAccount
-  name: admin-user
-  namespace: kubernetes-dashboard
-```
 Apply the configuration:
 
 ```bash
@@ -110,5 +78,7 @@ kind delete cluster --name my-kind-cluster
 ## 6. Notes
 
 Multiple Clusters: KIND supports multiple clusters. Use unique --name for each cluster.
+
 Custom Node Images: Specify Kubernetes versions by updating the image in the configuration file.
+
 Ephemeral Clusters: KIND clusters are temporary and will be lost if Docker is restarted.
