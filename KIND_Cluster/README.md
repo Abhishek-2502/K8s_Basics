@@ -19,11 +19,17 @@ Verify the cluster:
 kubectl get nodes
 kubectl cluster-info
 ```
-## 3. Accessing the Cluster
-Use kubectl to interact with the cluster:
+## 3. Changing the context
+Temporary
 ```bash
 
-kubectl cluster-info
+kubectl cluster-info --context abhi-kind-cluster
+```
+
+Permanent
+```bash
+
+kubectl config use-context abhi-kind-cluster
 ```
 
 

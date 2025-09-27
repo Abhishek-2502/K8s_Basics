@@ -18,7 +18,7 @@ docker tag social-media:latest abhi25022004/social-media:latest
 docker push abhi25022004/social-media:latest
 ```
 
-# MINIKUBE Commands
+# MINIKUBE COMMANDS
 
 ### Start
 ```
@@ -33,8 +33,11 @@ minikube start --driver=virtualbox
 ```
 minikube start --no-vtx-check
 ```
+```
+minikube start --driver=virtualbox -vm=true
+```
 
-### Other Basics
+### Other 
 ```
 minikube version
 ```
@@ -69,38 +72,15 @@ minikube stop
 minikube tunnel
 ```
 
-### Metrics Service
-```
-minikube addons enable metrics-server
-kubectl get deployment metrics-server -n kube-system
-```
-
 ### To make docker the default driver:
 ```
 minikube config set driver docker
 ```
 
-### Get Pods
+### Metrics Service
 ```
-kubectl get pods -A
-```
-```
-kubectl get pods
-```
-
-### Delete Pod
-```
-kubectl delete pod pod_name
-```
-
-### Get logs
-```
-kubectl logs pod_name
-```
-
-### Get Pods info
-```
-kubectl describe pods
+minikube addons enable metrics-server
+kubectl get deployment metrics-server -n kube-system
 ```
 
 
@@ -136,52 +116,6 @@ exit
 kubectl apply -f deployment.yaml
 ```
 
-### Get All Deployments
-```
-kubectl get deployments
-```
-
-### Port Forward to Deployment
-```
-kubectl port-forward deployment/deployment_name 8000:8000
-```
-
-### Create Deployment with Image
-```
-kubectl create deployment deployment_name --image=link
-```
-
-### Delete Deployment
-```
-kubectl delete deployment deployment_name
-```
-
-### Expose Deployment as Service
-```
-kubectl expose deployment deployment_name --type=LoadBalancer --port=80
-```
-
-### Update Deployment Image
-```
-kubectl set image deployment deployment_name container_name=new_image_name:version
-```
-
-### Check status of Rollout
-```
-kubectl rollout status deployment deployment_name 
-```
-
-### Rollback a Rollout
-```
-kubectl rollout undo deployment deployment_name 
-```
-
-### Scale
-```
-kubectl scale deployment deployment_name -replicas=5
-```
-
-
 
 
 ## Service.yaml (NOTE: Require Deployment.yaml or Pod.yaml)
@@ -194,11 +128,6 @@ kubectl apply -f service.yaml
 ### Get All Services
 ```
 kubectl get service
-```
-
-### Delete a Service
-```
-kubectl delete service service_name
 ```
 
 ### To access it via browser (on Minikube):
@@ -226,11 +155,6 @@ kubectl autoscale deployment social-media-deployment ^
 ### Check the HPA status:
 ```
 kubectl get hpa
-```
-
-### Delete HPA
-```
-kubectl delete hpa social-media-deployment
 ```
 
 ### Testing:

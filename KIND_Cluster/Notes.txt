@@ -1,0 +1,11 @@
+## Pods
+Pods is a 
+
+## Deployment/ReplicaSet/DaemonSet/StatefulSet
+
+We can do rolling update on Deployment but not on ReplicaSet.
+
+DaemonSet ensure every node should have atleast 1 running ReplicaSet.
+
+
+Cron is following a particular schedule. (Cron Guru)

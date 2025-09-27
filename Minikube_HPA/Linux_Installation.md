@@ -37,6 +37,7 @@ Make it executable and move it into your path:
 ```bash
 chmod +x minikube
 sudo mv minikube /usr/local/bin/
+minikube version
 ```
 
 ---
@@ -52,6 +53,7 @@ Make it executable and move it into your path:
 ```bash
 chmod +x kubectl
 sudo mv kubectl /usr/local/bin/
+kubectl version
 ```
 
 
@@ -65,4 +67,4 @@ Now, you can start Minikube with the following command:
 minikube start --driver=docker --vm=true 
 ```
 
-This command will start a single-node Kubernetes cluster inside a Docker container.
+This command will start a single-node Kubernetes cluster inside a Docker container. --vm is set true to run it on Cloud instance like ec2.

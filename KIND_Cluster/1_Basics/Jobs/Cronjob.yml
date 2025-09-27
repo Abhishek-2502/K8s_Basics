@@ -1,0 +1,29 @@
+kind: CronJob
+apiVersion: batch/v1
+metadata:
+  name: minite-backup
+  namespace: nginx
+spec:
+  schedule: "*/2 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          name: minite-backup-pod
+          labels:
+            app: minite-backup  
+        spec:
+          containers:
+          - name: minite-backup-container
+            image: busybox
+            command: 
+            - sh
+            - -c
+            - > 
+            echo "Backup started" ;
+            mkdir -p /backup && 
+            mkdir -p /demo-data &&
+            cp -r /demo-data /backup
+            echo "Backup completed!" ;
+          
+          restartPolicy: Never
