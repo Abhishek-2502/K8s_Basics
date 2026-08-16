@@ -42,7 +42,7 @@ kubectl get pods -n notes-app
 
 4. Port forward
 ```
-kubectl port-forward service/notes-app-service -n <namespace-name> 8000:8000 --address=0.0.0.0
+kubectl port-forward service/notes-app-service -n notes-app 8000:8000 --address=0.0.0.0
 ```
 
 ## Ingress
