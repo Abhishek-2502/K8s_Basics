@@ -36,15 +36,11 @@ kubectl apply -f ingress.yml
 **6.** Now, test the routing :
 
   - curl http://<VM_IP>/apache to access the Apache service.
+  - curl http://<VM_IP>/nginx to access the NGINX service.
   
   You can also open it in a browser:
   ```bash
   http://<VM_IP>/apache
-  ```
-  - curl http://<VM_IP>/nginx to access the NGINX service.
-
-  You can also open it in a browser:
-  ```bash
   http://<VM_IP>/nginx
   ```
 
