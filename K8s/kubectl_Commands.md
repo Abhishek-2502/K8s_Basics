@@ -46,6 +46,21 @@ kubectl config current-context
 kubectl config view --minify | grep namespace:
 ```
 
+## 🌟 MANIFEST FILE
+### Apply a Manifest file (YAML)
+```
+kubectl apply -f manifest_filename
+```
+
+### Apply all Manifest file in a directory
+```
+kubectl apply -f .
+```
+
+### Delete a Manifest
+```
+kubectl delete -f manifest_filename
+```
 
 ## 🌟 PODS
 ### Get Pods
@@ -114,21 +129,6 @@ kubectl describe pod/pod-name -n namespace-name
 ### Port Forward to Localhost
 ```
 kubectl port-forward pod-name port-number(your machine):port-number(inside pod)
-```
-
-### Apply a Manifest file (YAML)
-```
-kubectl apply -f manifest_filename
-```
-
-### Apply all Manifest file in a directory
-```
-kubectl apply -f .
-```
-
-### Delete a Manifest
-```
-kubectl delete -f manifest_filename
 ```
 
 ### Execute Commands inside Pod
