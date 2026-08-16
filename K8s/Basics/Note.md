@@ -15,3 +15,5 @@
     - service.yml
 
 8. Ingress
+    - README.md
+    - Project
