@@ -32,7 +32,6 @@ Permanent
 kubectl config use-context abhi-kind-cluster
 ```
 
-
 ## 4. Setting Up the Kubernetes Dashboard
 Deploy the Dashboard
 Apply the Kubernetes Dashboard manifest:
@@ -73,6 +72,7 @@ Open the Dashboard in your browser:
 http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/
 ```
 Use the token from the previous step to log in.
+
 
 ## KIND Commands
 
