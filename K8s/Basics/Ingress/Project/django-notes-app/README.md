@@ -32,7 +32,7 @@ docker push abhi25022004/notes-app:latest
 
 2. Apply Manifest 
 
-Change namespace to notes-app from nginx in deployment.yml and service.yml
+Change namespace to notes-app from nginx-ns in deployment.yml and service.yml
 ```
 kubectl apply -f namespace.yml -f deployment.yml -f service.yml
 ```
@@ -49,7 +49,7 @@ kubectl apply -f deployment.yml -f service.yml
 
 Verfiy
 ```
-kubectl get pods -n nginx
+kubectl get pods -n nginx-ns
 ```
 
 3. Expose port 8000 in Cloud

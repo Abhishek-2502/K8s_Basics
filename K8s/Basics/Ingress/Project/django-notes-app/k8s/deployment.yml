@@ -4,7 +4,7 @@ metadata:
   name: notes-app-deployment
   labels:
     app: notes-app
-  namespace: nginx
+  namespace: nginx-ns
 spec:
   replicas: 1
   selector:
