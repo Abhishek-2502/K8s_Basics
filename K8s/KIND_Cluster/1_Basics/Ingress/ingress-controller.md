@@ -68,7 +68,7 @@ Here:
 
 2. Recreate the cluster
 ```bash
-kind delete cluster
+kind delete cluster --name <cluster-name>
 kind create cluster --config kind-config.yaml
 ```
 

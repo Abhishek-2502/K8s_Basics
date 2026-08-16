@@ -1,24 +1,23 @@
 # Kubernetes Ingress Controller 
 
-In this readme, we will see how to use ingress controller to route the traffic on different services.
+We will see how to use ingress controller to route the traffic on different services.
 
 ### Pre-requisites to implement this project:
 - Setup KIND Cluster or Minikube on a virtual machine
-
+- Install Kubectl
 
 ### What we are going to implement:
 - We will create 2 deployment and services i.e nginx and apache and with the help of ingress, we will route the traffic between the services
 
-
 ## Steps to implement ingress:
 
-**1.** Create one yaml file for apache deployment and service i.e. `apache.yml`.
+**1.** Create one yaml file for apache deployment and service i.e. [apache.yml](apache.yml)
 
-**2.** Create one more yaml file for nginx deployment and service i.e. `nginx.yml`.
+**2.** Create one more yaml file for nginx deployment and service i.e. [nginx.yml](nginx.yml)
 
-**3.** Install Ingress-Controller using `ingress-controller.md`.
+**3.** Install Ingress-Controller using [ingress-controller.md](ingress-controller.md)
 
-**4.** Now create an Ingress resource that routes traffic to the Apache and NGINX services based on the URL path i.e.`ingress.yml`.
+**4.** Now create an Ingress resource that routes traffic to the Apache and NGINX services based on the URL path i.e. [ingress.yml](ingress.yml)
 
 **5.** Apply the Manifest:
 ```bash

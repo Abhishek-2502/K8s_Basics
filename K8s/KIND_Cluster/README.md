@@ -74,12 +74,118 @@ http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kube
 ```
 Use the token from the previous step to log in.
 
-## 5. Deleting the Cluster
-Delete the KIND cluster:
-```bash
+## KIND Commands
 
-kind delete cluster --name my-kind-cluster
+### Check KIND version
+
+```bash
+kind version
 ```
+
+### Create a cluster
+
+Default cluster:
+```bash
+kind create cluster
+```
+
+Using a configuration file:
+```bash
+kind create cluster --config filename.yaml
+```
+
+Specify a cluster name:
+```bash
+kind create cluster --name my-cluster
+```
+
+Using config + name:
+```bash
+kind create cluster --name my-cluster --config kind-config.yaml
+```
+
+### List your clusters
+
+```bash
+kind get clusters
+```
+
+### Get cluster nodes
+
+```bash
+kind get nodes
+```
+
+### Delete a cluster
+
+Delete the default cluster:
+```bash
+kind delete cluster
+```
+
+Delete a specific cluster:
+```bash
+kind delete cluster --name <cluster-name>
+```
+
+For the default cluster:
+
+```bash
+kind delete cluster
+```
+
+### Export kubeconfig
+
+Configure kubectl to use a KIND cluster:
+```bash
+kind export kubeconfig
+```
+
+For a specific cluster:
+```bash
+kind export kubeconfig --name <cluster-name>
+```
+
+### Load a Docker image into KIND
+
+If you build a Docker image locally and want to use it inside the KIND cluster:
+
+```bash
+kind load docker-image <image-name>:<tag>
+```
+
+Example:
+```bash
+kind load docker-image my-app:1.0
+```
+
+For a specific cluster:
+```bash
+kind load docker-image my-app:1.0 --name my-cluster
+```
+
+### Load an image from a tar file
+```bash
+kind load image-archive my-image.tar
+```
+
+### Export KIND logs
+
+Useful when troubleshooting:
+```bash
+kind export logs
+```
+
+Specify an output directory:
+```bash
+kind export logs ./kind-logs
+```
+
+For a specific cluster:
+```bash
+kind export logs ./kind-logs --name my-cluster
+```
+
 
 ## 6. Notes
 

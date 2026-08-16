@@ -15,4 +15,3 @@
     - service.yml
 
 8. Ingress
-
