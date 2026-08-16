@@ -5,8 +5,8 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
+  ingressClassName: nginx
   rules:
-  - host: "tws.com"
     http:
       paths:
       - path: /apache
