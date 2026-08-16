@@ -7,7 +7,14 @@ We will see how to use ingress controller to route the traffic on different serv
 - Install Kubectl
 
 ### What we are going to implement:
-- We will create 2 deployment and services i.e nginx and apache and with the help of ingress, we will route the traffic between the services
+We will create two Deployments and Services for Apache and NGINX. Using a Kubernetes Ingress resource, we will route incoming HTTP traffic to the appropriate Service based on the URL path.
+
+The traffic will be routed as follows:
+
+| URL Path | Service | Application |
+|----------|---------|-------------|
+| `/apache` | `apache-service` | Apache |
+| `/nginx` | `nginx-service` | NGINX |
 
 ## Steps to implement ingress:
 
