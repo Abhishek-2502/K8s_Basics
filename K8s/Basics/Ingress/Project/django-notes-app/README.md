@@ -45,6 +45,8 @@ kubectl get pods -n notes-app
 kubectl port-forward service/notes-app-service -n notes-app 8000:8000 --address=0.0.0.0
 ```
 
+5. Access Notes app on `<VM_IP>:8000`
+
 ## Ingress
 1. Push to Dockerhub 
 ```
