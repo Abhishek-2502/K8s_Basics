@@ -42,9 +42,24 @@ Verfiy
 kubectl get pods -n notes-app
 ```
 
+3. Expose port 8000 in Cloud
+
+4. Port forward
+```
+kubectl port-forward service/notes-app-service -n <namespace-name> 8000:8000 --address=0.0.0.0
+```
+
+## Ingress
+1. Push to Dockerhub 
+```
+docker image tag notes-app:latest abhi25022004/notes-app:latest
+
+docker push abhi25022004/notes-app:latest
+```
+
 2. Apply Manifest to see Ingress
 ```
-kubectl apply -f deployment.yml -f service.yml
+kubectl apply -f deployment.yml -f service.yml -f ingress.yml
 ```
 
 Verfiy
@@ -52,9 +67,9 @@ Verfiy
 kubectl get pods -n nginx-ns
 ```
 
-3. Expose port 8000 in Cloud
+3. Expose port 8000 and 8081 in Cloud
 
-4. Port forward
+4. Port forward (8081 will be used by ingress controller)
 ```
-kubectl port-forward service/notes-app-service -n <namespace-name> 8000:8000 --address=0.0.0.0
+kubectl port-forward service/ingress-nginx-controller -n ingress-nginx 8081:80 --address=0.0.0.0
 ```
