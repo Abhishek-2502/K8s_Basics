@@ -14,3 +14,5 @@
     - deployment.yml
     - service.yml
 
+8. Ingress
+
