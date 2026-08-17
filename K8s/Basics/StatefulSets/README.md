@@ -15,7 +15,9 @@ kubectl exec -it mysql-statefulset-0 -n mysql -- bash
 mysql -u root -p
 show databases;
 exit
+exit
 ```
+Password: root
 
 4. Delete a Pod to verify it is mainting state or not
 ```bash
