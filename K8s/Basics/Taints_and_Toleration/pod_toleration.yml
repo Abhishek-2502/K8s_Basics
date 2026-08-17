@@ -1,7 +1,7 @@
 kind: Pod
 apiVersion: v1
 metadata:
-  name: nginx-pod
+  name: nginx-pod-toleration
   namespace: taints-demo
 spec:
   containers:
