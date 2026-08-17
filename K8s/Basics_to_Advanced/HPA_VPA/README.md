@@ -94,6 +94,8 @@ kubectl run -i --tty load-generator --image=busybox -n apache /bin/sh
 while true; do wget -q -O- http://apache-service.apache.svc.cluster.local; done
 ```
 
+Type `exit` when you want to leave the shell. 
+
 This creates continuous load on the Apache service and causes HPA to scale the pods.
 
 3. Check the result in a new terminal:
@@ -157,6 +159,8 @@ Type `exit` when you want to leave the shell.
 
 This creates continuous load on the Apache service so VPA can recommend or apply changes to resource requests and limits.
 
+> If `RecommendationProvided` is still not true, keep the load running a bit longer and check again after a few minutes. VPA needs enough usage history to produce a recommendation.
+
 4. Check the result in a new terminal:
 ```bash
 kubectl get pods -n apache
@@ -165,11 +169,11 @@ watch kubectl get vpa -n apache
 
 > Wait a few minutes for the status to reflect.
 
-## How to verify VPA worked
+#### How to verify VPA worked
 
 Unlike HPA, VPA does not usually create new pods. It adjusts the CPU and memory requests/limits of the existing pod or recommends a new size.
 
-### Check the VPA recommendation
+#### Check the VPA recommendation
 ```bash
 kubectl get vpa -n apache -o yaml
 ```
@@ -190,7 +194,7 @@ status:
 
 This means VPA has successfully analyzed the pod and produced a recommendation.
 
-### Check the pod resource values
+#### Check the pod resource values
 ```bash
 kubectl describe pod -n apache
 ```
@@ -198,20 +202,25 @@ kubectl describe pod -n apache
 Look under the container section for:
 ```bash
 Requests:
+  cpu: 50m
+  memory: 64Mi
+Limits:
   cpu: 100m
   memory: 128Mi
-Limits:
-  cpu: 200m
-  memory: 256Mi
 ```
 
 If VPA has applied the recommendation, these values may change after a restart or pod recreation. If the values are still unchanged, it means the VPA recommendation is available but not yet applied to the running pod.
 
-### Important point
+#### Important point
 VPA focuses on resource sizing, not on scaling out the replica count. So, for VPA, we verify using:
 - `kubectl get vpa -n apache -o yaml`
 - `kubectl describe pod -n apache`
 - pod `Requests` and `Limits` inside the container section
+
+## Cleanup
+```bash
+kubectl delete ns apache
+```
 
 ## Other Details
 - HPA increases the number of pods.
