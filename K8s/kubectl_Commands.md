@@ -10,6 +10,11 @@
 kubectl get nodes
 ```
 
+### Top Nodes (Get Usage Metrics)
+```
+kubectl top nodes
+```
+
 ## 🌟 NAMESPACE
 ### Show all namespaces
 ```
@@ -109,6 +114,14 @@ kubectl delete pod pod-name
 kubectl delete pod pod-name -n namespace-name
 ```
 
+### Top Pods (Get Usage Metrics)
+```
+kubectl top pods -n namespace-name
+```
+View usage for Pods across all namespaces:
+```
+kubectl top pods -A
+```
 
 ### Get logs
 ```
@@ -246,6 +259,11 @@ kubectl port-forward service/service-name port-number(your machine):port-number(
 ```
 **Ex:** kubectl port-forward service/nginx-service 8081:80 --address=0.0.0.0
 
+Port Forward while using the terminal
+```
+kubectl port-forward service/service-name port-number(your machine):port-number(inside pod) --address=0.0.0.0 &
+```
+**Ex:** kubectl port-forward service/nginx-service 8081:80 --address=0.0.0.0 &
 
 ### Port Forward in namespace
 ```
