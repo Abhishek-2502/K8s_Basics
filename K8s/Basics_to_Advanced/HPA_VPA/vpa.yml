@@ -10,4 +10,4 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
   updatePolicy:
-    updateMode: "Auto" # Options: "Off", "Initial", "Auto"
+    updateMode: "Auto" # Options: "Off", "Initial", "Auto", "Recreate", "AutoRecreate", "InPlaceOrRecreate"

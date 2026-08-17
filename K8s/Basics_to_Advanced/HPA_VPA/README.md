@@ -4,6 +4,8 @@ In this demo, we will see how to deploy HPA and VPA controllers.
 - HPA automatically scales the number of pods based on CPU utilization.
 - VPA adjusts CPU and memory requests/limits vertically within the existing pod containers.
 
+Also we will create a deployment and a service for Apache. With HPA, the number of pods will scale automatically based on CPU utilization.
+
 ## Install Metrics Server on Minikube
 
 1. The Metrics Server enables HPA and provides resource metrics.
@@ -43,62 +45,37 @@ kubectl -n kube-system rollout restart deployment metrics-server
 
 5. Verify the metrics server is running:
 ```bash
-kubectl get pods -n kube-system
 kubectl top nodes
 kubectl top pods -n kube-system
 ```
+Metrics should be visible
 
-### For VPA
-1. Clone and install the Vertical Pod Autoscaler:
-```bash
-git clone https://github.com/kubernetes/autoscaler.git
-cd autoscaler/vertical-pod-autoscaler
-./hack/vpa-up.sh
-```
-
-2. Verify the VPA components:
-```bash
-kubectl get pods -n kube-system
-```
-
-## What we are going to implement
-In this demo, we will create a deployment and a service for Apache. With HPA, the number of pods will scale automatically based on CPU utilization.
 
 ### Steps to implement HPA
 
-1. Create [namespace.yml](namespace.yml)
-
-2. Add resource requests and limits in [deployment.yml](deployment.yml). This is required for HPA to monitor CPU usage.
-
-3. Create [service.yml](service.yml)
-
-4. Apply the manifests:
+1. Apply the manifests:
 ```bash
 kubectl apply -f namespace.yml -f deployment.yml -f service.yml
 ```
 
-5. Verify:
+2. Verify:
 ```bash
 kubectl get all -n apache
 kubectl port-forward svc/apache-service -n apache 8081:80 --address 0.0.0.0
 ```
 Access the app in the browser to confirm it is working.
 
-6. Create the HPA resource
-
-We will create an HPA for the Apache deployment. The HPA will scale the number of pods based on CPU utilization. Create [hpa.yml](hpa.yml).
-
-7. Apply the HPA manifest:
+3. Apply the HPA manifest:
 ```bash
 kubectl apply -f hpa.yml
 ```
 
-8. Port-forward the service:
+4. Port-forward the service:
 ```bash
 kubectl port-forward svc/apache-service -n apache 8081:80 --address 0.0.0.0 &
 ```
 
-9. Verify HPA status:
+5. Verify HPA status:
 ```bash
 kubectl get hpa -n apache
 ```
@@ -127,39 +104,114 @@ watch kubectl get hpa -n apache
 
 > Wait a few minutes for the status to reflect.
 
+## Install Vertical Pod Autoscaler (VPA)
+
+### For VPA
+1. Clone and install the Vertical Pod Autoscaler:
+```bash
+git clone https://github.com/kubernetes/autoscaler.git
+cd autoscaler/vertical-pod-autoscaler
+./hack/vpa-up.sh
+```
+
+2. Verify the VPA components:
+```bash
+kubectl get pods -n kube-system
+```
+
 ### Steps to implement VPA
 
-1. Apply the VPA manifest:
+1. Apply the manifests:
+```bash
+kubectl apply -f namespace.yml -f deployment.yml -f service.yml
+```
+
+2. Apply the VPA manifest:
 ```bash
 kubectl apply -f vpa.yml
 ```
 
-2. Verify VPA status:
+3. Verify VPA status:
 ```bash
 kubectl get vpa -n apache
 ```
 
 ### Stress Testing for VPA
 
-1. Run a busybox pod to generate traffic:
+1. Delete the load generator if it already exists:
+```bash
+kubectl delete pod -n apache load-generator
+```
+
+2. Run a busybox pod to generate traffic:
 ```bash
 kubectl run -i --tty load-generator --image=busybox -n apache /bin/sh
 ```
 
-2. Inside the container, generate load:
+3. Inside the container, generate load:
 ```bash
 while true; do wget -q -O- http://apache-service.apache.svc.cluster.local; done
 ```
 
+Type `exit` when you want to leave the shell.
+
 This creates continuous load on the Apache service so VPA can recommend or apply changes to resource requests and limits.
 
-3. Check the result in a new terminal:
+4. Check the result in a new terminal:
 ```bash
 kubectl get pods -n apache
 watch kubectl get vpa -n apache
 ```
 
 > Wait a few minutes for the status to reflect.
+
+## How to verify VPA worked
+
+Unlike HPA, VPA does not usually create new pods. It adjusts the CPU and memory requests/limits of the existing pod or recommends a new size.
+
+### Check the VPA recommendation
+```bash
+kubectl get vpa -n apache -o yaml
+```
+
+Look for:
+```yaml
+status:
+  conditions:
+  - type: RecommendationProvided
+    status: "True"
+  recommendation:
+    containerRecommendations:
+    - containerName: apache
+      target:
+        cpu: 49m
+        memory: 250Mi
+```
+
+This means VPA has successfully analyzed the pod and produced a recommendation.
+
+### Check the pod resource values
+```bash
+kubectl describe pod -n apache
+```
+
+Look under the container section for:
+```bash
+Requests:
+  cpu: 100m
+  memory: 128Mi
+Limits:
+  cpu: 200m
+  memory: 256Mi
+```
+
+If VPA has applied the recommendation, these values may change after a restart or pod recreation. If the values are still unchanged, it means the VPA recommendation is available but not yet applied to the running pod.
+
+### Important point
+VPA focuses on resource sizing, not on scaling out the replica count. So, for VPA, we verify using:
+- `kubectl get vpa -n apache -o yaml`
+- `kubectl describe pod -n apache`
+- pod `Requests` and `Limits` inside the container section
 
 ## Other Details
 - HPA increases the number of pods.
