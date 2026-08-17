@@ -1,3 +1,5 @@
+## StatefulSets
+
 1. Apply Manifest
 ```bash
 kubectl apply -f namespace.yml -f resource-quota.yml -f service.yml -f statefulset.yml 
