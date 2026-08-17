@@ -43,33 +43,62 @@ Verify:
 kubectl get pods -n ingress-nginx
 ```
 
-## Changing the Port to access Ingress
-By default, the KIND configuration may expose the Ingress Controller on port 80 in `kind-config.yaml`
-```
-extraPortMappings:
-  - containerPort: 80
-    hostPort: 80
-    protocol: TCP
+## Accessing Ingress on a Custom Port
+
+The Ingress Controller listens on port `80` inside the KIND cluster.
+
+If you want to access the Ingress Controller using a custom port such as `8081`, you can use `kubectl port-forward` without changing the KIND configuration.
+
+First, verify the Ingress Controller Service:
+
+```bash
+kubectl get svc -n ingress-nginx
 ```
 
-1. If you want to access the Ingress Controller using a custom port such as 8081, change the hostPort:
+Then forward port `8081` on the VM to port `80` of the Ingress Controller:
+
+```bash
+kubectl port-forward -n ingress-nginx \
+  svc/ingress-nginx-controller 8081:80 \
+  --address 0.0.0.0
 ```
+
+> **Note:** `kubectl port-forward` is primarily intended for development and testing. The port-forwarding process must remain running for the application to be accessible.
+
+The external port can also be configured directly in `kind-config.yaml` using `extraPortMappings`.
+
+For example, to expose the Ingress Controller on port `8081`:
+
+```yaml
 extraPortMappings:
   - containerPort: 80
-    hostPort: 8081  # Change to desired port
+    hostPort: 8081
     protocol: TCP
-```
+````
 
 Here:
- - hostPort → Port exposed on the VM/host.
- - containerPort → Port inside the KIND node.
- - containerPort remains 80.
- - Only the external hostPort needs to be changed.
 
-2. Recreate the cluster
+* `hostPort` → Port exposed on the VM/host.
+* `containerPort` → Port inside the KIND node.
+* `containerPort` remains `80`.
+* The Kubernetes Services and Ingress Controller continue to use port `80`.
+
+
+#### Important
+
+KIND port mappings are configured when the cluster is created. If you change the `hostPort` in `kind-config.yaml`, you need to recreate the KIND cluster:
+
 ```bash
 kind delete cluster --name <cluster-name>
 kind create cluster --config kind-config.yaml
 ```
 
-3. Install the Ingress Controller Again
+After recreating the cluster, install the Ingress Controller again using [ingress-controller.md](ingress-controller.md).
+
+
+#### Port Forwarding vs KIND Port Mapping
+
+* **`kind-config.yaml` → `extraPortMappings`** for a persistent VM-to-KIND port mapping.
+* **`kubectl port-forward`** for temporary development/testing access.
+
+This gives the reader both approaches without confusing **external port `8081`** with the internal Kubernetes **port `80`**.
