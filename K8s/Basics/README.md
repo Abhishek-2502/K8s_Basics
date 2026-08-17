@@ -21,3 +21,5 @@
 9. StatefulSets and Resources (ResourceQuota, Requests and Limits)
 
 10. ConfigMaps and Secrets
+
+11. Probes
