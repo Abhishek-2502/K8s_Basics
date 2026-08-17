@@ -24,6 +24,20 @@ kubectl get svc -n probe-demo
 kubectl describe pod -n probe-demo
 ```
 
+Example output from the pod description:
+```bash
+Ready:          True
+Liveness:       http-get http://:80/ delay=10s timeout=1s period=10s #success=1 #failure=3
+Readiness:      http-get http://:80/ delay=3s timeout=1s period=5s #success=1 #failure=3
+Startup:        http-get http://:80/ delay=0s timeout=1s period=5s #success=1 #failure=30
+```
+
+This indicates:
+- the container is currently `Ready: True`
+- liveness checks are configured and passing
+- readiness checks are configured and passing
+- startup checks are configured and passing
+
 Look for:
 - `Startup probe failed`
 - `Readiness probe failed`
@@ -81,5 +95,27 @@ Probes help Kubernetes keep applications healthy by:
 - restarting crashed containers
 - avoiding traffic before the app is ready
 - handling slow startup gracefully
+
+## 7. Interview Question
+### Why is the failure threshold 3 for readiness and liveness, and 30 for startup?
+Because the threshold value depends on the purpose of the probe:
+
+- `readinessProbe` checks whether the application is ready to receive traffic.
+  - If the app is not ready, Kubernetes should remove it from service endpoints quickly.
+  - Therefore, the failure threshold is usually lower, such as `3`.
+
+- `livenessProbe` checks whether the application is still alive.
+  - If the app is unhealthy, Kubernetes should restart it quickly.
+  - Therefore, the failure threshold is also usually lower, such as `3`.
+
+- `startupProbe` checks whether the application is still starting up.
+  - A slow app may take longer to initialize.
+  - Therefore, Kubernetes gives it more time before considering it failed.
+  - That is why the threshold can be higher, such as `30`.
+
+In short:
+- `readinessProbe` = app not ready for traffic
+- `livenessProbe` = app is unhealthy, restart it
+- `startupProbe` = app is still initializing, allow more time
 
 **Note:** In a real-world app, probes are often based on HTTP endpoints, TCP checks, or command execution depending on the application behavior.
