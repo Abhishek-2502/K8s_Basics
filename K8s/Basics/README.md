@@ -23,3 +23,5 @@
 10. ConfigMaps and Secrets
 
 11. Probes
+
+12. Taints and Toleration
