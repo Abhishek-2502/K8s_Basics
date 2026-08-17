@@ -27,10 +27,17 @@
  - Jobs and CronJobs
  - Persistent Volume
  - Persistent Volume Claim
- - Ingress
+ - Ingress and Ingress Controller
+ - Annotation
  - ConfigMaps
  - Secrets
+ - Resources and Limits
+ - Resource Quota
+ - Probes
+ - Taints and Toleration
  - HPA and VPA
+ - Node Affinity
+ - Helm
 
 
 # Resources
