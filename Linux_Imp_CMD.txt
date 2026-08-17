@@ -1,0 +1,5 @@
+chmod 777 shell_filename.sh -> Giving Permission
+./shell_filename.sh -> Executing Shell Script
+
+watch <command> -> Runs a command repeatedly and refreshes output
+sudo -E <command> -> Runs command as sudo preserving environment variables

@@ -118,7 +118,7 @@ kubectl logs pod-name
 kubectl logs pod/pod-name -n namespace-name
 ```
 
-### Get Pods info
+### Get Pods info (For Troubleshooting)
 ```
 kubectl describe pods
 ```

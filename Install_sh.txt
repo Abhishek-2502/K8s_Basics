@@ -1,2 +1,0 @@
-chmod 777 shell_filename.sh
-./shell_filename.sh
