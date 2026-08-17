@@ -37,7 +37,10 @@
  - Taints and Toleration
  - HPA and VPA
  - Node Affinity
+ - RBAC
  - Helm
+ - SideCar/Init Container
+ - Istio Service Mesh
 
 
 # Resources
