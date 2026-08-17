@@ -17,3 +17,7 @@
 8. Ingress
     - README.md
     - Project
+
+9. StatefulSet
+
+10. ConfigMaps and Secrets
