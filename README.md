@@ -35,9 +35,9 @@
  - Resource Quota
  - Probes
  - Taints and Toleration
- - HPA and VPA
+ - HPA and VPA and KEDA (Horizontal, Vertical Pod and Kubernetes Event Driven Auto Scaling)
  - Node Affinity
- - RBAC
+ - RBAC (Role Based Access Control)
  - Helm
  - SideCar/Init Container
  - Istio Service Mesh
