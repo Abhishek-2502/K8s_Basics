@@ -18,6 +18,6 @@
     - README.md
     - Project
 
-9. StatefulSet
+9. StatefulSets
 
 10. ConfigMaps and Secrets

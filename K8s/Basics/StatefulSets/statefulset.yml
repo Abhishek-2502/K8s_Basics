@@ -23,10 +23,10 @@ spec:
         resources:
           requests:
             cpu: 100m
-            memory: 128Mi
+            memory: 64Mi
           limits:
             cpu: 200m
-            memory: 25Mi
+            memory: 256Mi
         env:
         - name: MYSQL_ROOT_PASSWORD
           value: root
