@@ -22,11 +22,11 @@ spec:
         - containerPort: 3306
         resources:
           requests:
-            cpu: 100m
-            memory: 128Mi
+            cpu: 250m
+            memory: 512Mi
           limits:
-            cpu: 200m
-            memory: 25Mi
+            cpu: 500m
+            memory: 1Gi
         env:
         - name: MYSQL_ROOT_PASSWORD
           valueFrom:
