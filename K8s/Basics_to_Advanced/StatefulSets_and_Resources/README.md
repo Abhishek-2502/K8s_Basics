@@ -1,3 +1,5 @@
+## StatefulSets
+
 1. Apply Manifest
 ```bash
 kubectl apply -f namespace.yml -f resource-quota.yml -f service.yml -f statefulset.yml 
@@ -9,7 +11,7 @@ kubectl get pods -n mysql
 ```
 It should display name like mysql-statefulset-0, mysql-statefulset-1,...
 
-3. Get Inside Pod to see Database "Devops created or not
+3. Get Inside Pod to see Database `Devops` created or not
 ```bash
 kubectl exec -it mysql-statefulset-0 -n mysql -- bash
 mysql -u root -p
