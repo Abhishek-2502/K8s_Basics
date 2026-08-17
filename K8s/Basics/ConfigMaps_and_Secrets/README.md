@@ -1,11 +1,11 @@
 1. Apply Manifest
 ```bash
-kubectl apply -f namespace.yml -f service.yml -f statefulset.yml -f configMaps.yml -f secrets.yml
+kubectl apply -f namespace.yml -f service.yml -f statefulset.yml -f configMap.yml -f secrets.yml
 ```
 
 2. Base64 Encode Password
 ```bash
-echo "Your Password | base64
+echo "Your Password" | base64
 ```
 
 3. Verify
