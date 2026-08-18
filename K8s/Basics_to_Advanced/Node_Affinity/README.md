@@ -1,6 +1,6 @@
-# Node Affinity Demo
+# Node Affinity 
 
-This demo shows how Kubernetes schedules pods to nodes using node affinity.
+This README shows how Kubernetes schedules pods to nodes using node affinity.
 
 Node affinity is used when you want a pod to run only on certain nodes based on labels such as:
 - region
@@ -14,7 +14,7 @@ Node affinity is used when you want a pod to run only on certain nodes based on 
 - preferred node affinity (deployment-preferred.yml): pod prefers matching nodes but can run elsewhere if needed
 - mismatch case (deployment-mismatch.yml): pod remains pending when the label does not match
 
-## Demo required node affinity
+## Required node affinity
 
 ### 1. Apply the namespace
 
@@ -79,7 +79,7 @@ kubectl describe pod -n node-affinity-demo
 
 Look for the node name and the scheduled placement.
 
-## Demo preferred node affinity
+## Preferred node affinity
 
 Apply the preferred version:
 
@@ -89,7 +89,7 @@ kubectl apply -f deployment-preferred.yml
 
 This pod prefers nodes with `disktype=ssd`, but if none are available it can still run elsewhere.
 
-## Demo a mismatch case
+## A mismatch case
 
 Apply the mismatch deployment:
 
