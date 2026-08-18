@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-preferred-affinity
+  namespace: node-affinity-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx-preferred-affinity
+  template:
+    metadata:
+      labels:
+        app: nginx-preferred-affinity
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+        ports:
+        - containerPort: 80
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            preference:
+              matchExpressions:
+              - key: disktype
+                operator: In
+                values:
+                - ssd

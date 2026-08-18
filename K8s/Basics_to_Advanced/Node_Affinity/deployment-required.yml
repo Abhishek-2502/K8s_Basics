@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-required-affinity
+  namespace: node-affinity-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx-required-affinity
+  template:
+    metadata:
+      labels:
+        app: nginx-required-affinity
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+        ports:
+        - containerPort: 80
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: disktype
+                operator: In
+                values:
+                - ssd
