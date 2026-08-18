@@ -25,3 +25,9 @@
 11. Probes
 
 12. Taints and Toleration
+
+13. HPA and VPA
+
+14. Node Affinity
+
+15. RBAC
