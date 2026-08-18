@@ -78,12 +78,6 @@ Verfiy
 kubectl get pods -n nginx-ns
 ```
 
-
-Verfiy
-```
-kubectl get pods -n nginx-ns
-```
-
 5. Expose port 8000 and 8081 in Cloud
 
 6. Port forward (8081 will be used by ingress controller)
