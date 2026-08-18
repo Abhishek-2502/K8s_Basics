@@ -1,38 +1,63 @@
-# RBAC 
+# RBAC in Kubernetes
 
-This explains how Role-Based Access Control (RBAC) works in Kubernetes.
+Role-Based Access Control (RBAC) is Kubernetes' authorization model for deciding who can do what in the cluster.
+
+It is based on the principle of least privilege: grant only the permissions a subject needs, and nothing more.
 
 ## Quick concept
 
-RBAC in Kubernetes is the mechanism that decides who is allowed to do what inside the cluster.
+A simple way to remember RBAC is:
 
-A simple way to remember it is:
-
-- Subject: who is asking for access (user, ServiceAccount, group)
-- Role: what are the allowed actions
-- Binding: where that permission is applied
+- Subject: who is asking for access (user, group, ServiceAccount)
+- Role: what actions are allowed
+- Binding: where that role is attached
 
 Examples:
 
 - ServiceAccount: identity for workloads or users inside a namespace
 - Role: permissions inside a namespace
-- RoleBinding: binds a Role to a user or ServiceAccount in the same namespace
-- ClusterRole / ClusterRoleBinding: cluster-wide permissions (not added in this demo yet)
+- RoleBinding: binds a Role to a subject in the same namespace
+- ClusterRole: permissions that can apply cluster-wide
+- ClusterRoleBinding: binds a ClusterRole to a subject across the cluster
 
-### RBAC in Kubernetes
+## How RBAC works
 
-Kubernetes does not allow access by default just because a user exists. Every request goes through an authorization check.
+When a request reaches the Kubernetes API server, it checks:
 
-The API server checks:
+1. Who is the caller?
+2. Which resource is being accessed?
+3. Which action is being performed?
+4. Does a matching Role or ClusterRole allow it?
 
-1. who the user is
-2. what resource is being accessed
-3. which action is requested
-4. whether a matching Role or ClusterRole grants that permission
+If the answer is yes, access is granted. If not, it is denied.
 
-If a matching rule exists, access is allowed. If not, the request is denied.
+## Two main RBAC scopes
 
-This is why RBAC is commonly used to follow the principle of least privilege.
+There are effectively two RBAC scopes in Kubernetes:
+
+### 1. Namespace-scoped RBAC
+This is used when permissions should be limited to a single namespace.
+
+Common examples:
+- app developers managing only their own namespace
+- service accounts used by applications in one namespace
+
+Objects involved:
+- Role
+- RoleBinding
+
+### 2. Cluster-scoped RBAC
+This is used when permissions are required across the entire cluster.
+
+Common examples:
+- cluster administrators
+- monitoring tools
+- dashboard tools
+- tools that need to view or manage cluster-wide resources
+
+Objects involved:
+- ClusterRole
+- ClusterRoleBinding
 
 ## Namespace Level
 
@@ -143,23 +168,109 @@ This proves that access is granted only to the resources and verbs defined in th
 
 ## Why this matters
 
-Role-based access control helps you follow the principle of least privilege:
+RBAC helps you follow the principle of least privilege:
 
 - grant only the permissions needed
 - keep permissions inside a namespace when possible
 - avoid giving broad access by default
+- reduce accidental or malicious cluster-wide damage
 
-## Cluster Level (Coming Soon)
+## Cluster Level
 
-This demo stops at the namespace level for now.
+Cluster-level RBAC is used when permissions should apply across the whole cluster instead of just one namespace.
 
-Cluster-level RBAC uses:
-- ClusterRole
-- ClusterRoleBinding
+This is used for:
+- cluster-admin tools
+- monitoring systems
+- operations utilities
+- access to cluster-scoped resources such as nodes and persistent volumes
 
-These are used when access is needed across all namespaces or for cluster-scoped resources such as nodes, persistent volumes, and cluster-wide APIs.
+Unlike a `RoleBinding`, a `ClusterRoleBinding` is not limited to a single namespace.
 
-This section will be added later.
+A `ClusterRole` gives permissions cluster-wide, and a `ClusterRoleBinding` attaches that permission to a subject such as a user, group, or ServiceAccount.
+
+### Example: Kubernetes Dashboard admin access
+
+A common cluster RBAC example is the Kubernetes Dashboard admin setup. It creates a ServiceAccount and binds it to the built-in `cluster-admin` ClusterRole so the dashboard can manage the cluster.
+
+This file is available at `K8s/KIND_Cluster_Install/dashboard-admin-user.yml`.
+
+### What this means
+
+- `admin-user` is created in the `kubernetes-dashboard` namespace
+- it is bound to the `cluster-admin` ClusterRole
+- `cluster-admin` is a built-in cluster-wide role with broad access
+- the binding is cluster-wide, not namespaced
+
+### Verification
+
+```bash
+kubectl get sa -n kubernetes-dashboard
+kubectl get clusterrolebinding admin-user
+kubectl describe clusterrolebinding admin-user
+```
+
+This shows that the service account is linked to a cluster-wide admin role.
+
+> This is a good example of cluster-level RBAC because it is not restricted to one namespace.
+
+### Example 2: Monitoring / read-only cluster access
+
+Another common cluster RBAC example is a monitoring tool that needs to read cluster resources but should not change anything.
+
+```yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: cluster-reader
+  namespace: monitoring
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: read-only-cluster-role
+rules:
+- apiGroups: [""]
+  resources: ["pods", "nodes", "services", "namespaces"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["apps"]
+  resources: ["deployments", "replicasets", "daemonsets", "statefulsets"]
+  verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: cluster-reader-binding
+subjects:
+- kind: ServiceAccount
+  name: cluster-reader
+  namespace: monitoring
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: read-only-cluster-role
+```
+
+This is cluster-level RBAC because it gives a service account permission to read resources across the cluster without allowing modification.
+
+It is useful for:
+- Prometheus
+- monitoring dashboards
+- observability tools
+- read-only auditing or health checks
+
+## Cluster RBAC vs Namespace RBAC
+
+| Scope | Objects | Typical use |
+|---|---|---|
+| Namespace | Role, RoleBinding | App-level access in one namespace |
+| Cluster | ClusterRole, ClusterRoleBinding | Admin, monitoring, cluster-wide tools |
+
+## Best practice
+
+- Prefer `Role` and `RoleBinding` for normal application access.
+- Use `ClusterRole` and `ClusterRoleBinding` only when the permission must apply cluster-wide.
+- Avoid using `cluster-admin` unless you really need full cluster control.
 
 ## Cleanup
 

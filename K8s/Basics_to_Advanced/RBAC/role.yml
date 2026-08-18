@@ -4,6 +4,6 @@ metadata:
   name: apache-manager
   namespace: apache
 rules:
-  - apiGroups: ["", "apps","rbac.authorization.k8s.io","batch"] # "*" means the all core API group
+  - apiGroups: ["", "apps","rbac.authorization.k8s.io","batch"] # "" = core API, "apps" = deployments, "batch" = jobs, "*" = all API groups
     resources: ["pods", "deployments", "services"] # "replicasets", "configmaps", "secrets", "roles", "rolebindings", "cronjobs"
     verbs: ["get", "apply", "delete", "list", "watch", "create", "update", "patch"]
