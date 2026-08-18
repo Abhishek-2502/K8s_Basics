@@ -58,12 +58,12 @@ docker push abhi25022004/notes-app:latest
 
 3. Apply Manifest of Nginx
 
-Goto K8s/Basics
+Goto K8s/Basics_to_Advanced
 ```
 kubectl apply -f namespace.yml -f deployment.yml 
 ```
 
-Goto K8s/Basics/Volume 
+Goto K8s/Basics_to_Advanced/Volume 
 ```
 kubectl apply -f service.yml
 ```
