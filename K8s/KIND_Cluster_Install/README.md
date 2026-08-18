@@ -1,6 +1,6 @@
 # KIND Cluster Setup Guide
 
-## 1. Installing KIND and kubectl
+## 1. Installing KIND and Kubectl
 Install KIND and kubectl using the provided [script](install.sh)
 
 ## 2. Setting Up the KIND Cluster
@@ -159,27 +159,27 @@ Use the token from the step 4.4 to log in.
 **Architecture:**
 
 ```text
-              Your Windows PC
+              Your Local PC
                     │
-          localhost:8001
+              localhost:8001
                     │
                     │ SSH -L
                     ▼
-             GCP VM
+                 GCP VM
                     │
-          localhost:8001
-                    │
-                    ▼
-            kubectl proxy
+              localhost:8001
                     │
                     ▼
-       Kubernetes Dashboard
+               kubectl proxy
                     │
                     ▼
-          KIND Kubernetes Cluster
+           Kubernetes Dashboard
+                    │
+                    ▼
+           KIND Kubernetes Cluster
 ```
 
-## KIND Commands
+## 5. KIND COMMANDS
 
 ### Check KIND version
 
@@ -294,8 +294,8 @@ kind export logs ./kind-logs --name my-cluster
 
 ## 6. Notes
 
-Multiple Clusters: KIND supports multiple clusters. Use unique --name for each cluster.
+- `Multiple Clusters:` KIND supports multiple clusters. Use unique --name for each cluster.
 
-Custom Node Images: Specify Kubernetes versions by updating the image in the configuration file.
+- `Custom Node Images:` Specify Kubernetes versions by updating the image in the configuration file.
 
-Ephemeral Clusters: KIND clusters are temporary and will be lost if Docker is restarted.
+- `Ephemeral Clusters:` KIND clusters are temporary and will be lost if Docker is restarted.
