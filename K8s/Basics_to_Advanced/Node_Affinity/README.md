@@ -14,28 +14,15 @@ Node affinity is used when you want a pod to run only on certain nodes based on 
 - preferred node affinity (deployment-preferred.yml): pod prefers matching nodes but can run elsewhere if needed
 - mismatch case (deployment-mismatch.yml): pod remains pending when the label does not match
 
-## 1. Label the nodes
+## Demo required node affinity
 
-Pick one node and give it a label such as `disktype=ssd`.
-
-```bash
-kubectl get nodes
-kubectl label nodes <node-name> disktype=ssd
-```
-
-Example:
-
-```bash
-kubectl label nodes abhi-kind-worker disktype=ssd
-```
-
-## 2. Apply the namespace
+### 1. Apply the namespace
 
 ```bash
 kubectl apply -f namespace.yml
 ```
 
-## 3. Apply the deployment with required node affinity
+### 2. Apply the deployment with required node affinity
 
 ```bash
 kubectl apply -f deployment-required.yml
@@ -50,9 +37,40 @@ values:
 - ssd
 ```
 
-The pod should schedule only on the labeled node.
+The pod should schedule only on the labeled node. But no node is labelled for now.
 
-## 4. Check the pod status
+### 3. Check the pod status
+
+```bash
+kubectl get pods -n node-affinity-demo
+```
+
+It should display status as Pending.
+
+
+### 4. Label the nodes
+
+Pick one node and give it a label such as `disktype=ssd`.
+
+```bash
+kubectl get nodes
+kubectl label nodes <node-name> disktype=ssd
+kubectl get nodes --show-labels
+```
+
+Example:
+
+```bash
+kubectl label nodes abhi-kind-cluster-worker disktype=ssd
+```
+
+Expected output should include:
+
+```bash
+abhi-kind-cluster-worker     disktype=ssd
+```
+
+### 5. Check the pod status
 
 ```bash
 kubectl get pods -n node-affinity-demo
@@ -61,7 +79,7 @@ kubectl describe pod -n node-affinity-demo
 
 Look for the node name and the scheduled placement.
 
-## 5. Demo preferred node affinity
+## Demo preferred node affinity
 
 Apply the preferred version:
 
@@ -71,7 +89,7 @@ kubectl apply -f deployment-preferred.yml
 
 This pod prefers nodes with `disktype=ssd`, but if none are available it can still run elsewhere.
 
-## 6. Demo a mismatch case
+## Demo a mismatch case
 
 Apply the mismatch deployment:
 
@@ -90,7 +108,7 @@ values:
 
 Since no node has that label, the pod will remain Pending.
 
-## 7. Verify pending pods
+### 1. Verify pending pods
 
 ```bash
 kubectl get pods -n node-affinity-demo
@@ -168,6 +186,22 @@ affinity:
 
 - required node affinity: strict matching, pod will not run unless the node matches
 - preferred node affinity: soft preference, Kubernetes tries to place on matching nodes but can still schedule elsewhere
+
+## Remove the node label / undo the affinity setup
+
+If you want to remove the scheduling restriction from the node, delete the label:
+
+```bash
+kubectl label nodes <node-name> disktype-
+```
+
+Example:
+
+```bash
+kubectl label nodes abhi-kind-cluster-worker disktype-
+```
+
+After removing the label, the node is no longer considered a match for the affinity rule. If the pod is already scheduled, it will keep running until it is recreated or rescheduled.
 
 ## Cleanup
 
