@@ -31,3 +31,7 @@
 14. Node Affinity
 
 15. RBAC
+
+16. CRD
+
+17. Helm
