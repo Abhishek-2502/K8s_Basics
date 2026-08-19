@@ -48,7 +48,9 @@ kubectl -n kube-system rollout restart deployment metrics-server
 kubectl top nodes
 kubectl top pods -n kube-system
 ```
-Metrics should be visible
+>If metrics are available, these commands display CPU and memory usage for nodes and pods. The Metrics Server may need a few minutes before metrics appear.
+
+>Top commands are used for `Resource Usage Analysis`.
 
 
 ### Steps to implement HPA
