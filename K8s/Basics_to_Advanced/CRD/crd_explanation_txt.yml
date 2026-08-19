@@ -1,0 +1,37 @@
+apiVersion: apiextensions.k8s.io/v1 # It is used to specify the API version of the CustomResourceDefinition. It is used to differentiate between different versions of the same resource. Like: apiVersion: apps/v1, apiVersion: batch/v1, apiVersion: v1.
+kind: CustomResourceDefinition # It is used to define a new custom resource in the Kubernetes cluster. It allows users to create their own resources with custom specifications and behaviors. Like: kind: Deployment, kind: Service, kind: Pod.
+metadata:
+  name: devopsbatches.trainwithshubham.com # It is a combination of the plural name of the custom resource and the API group. It is used to uniquely identify the custom resource in the cluster. Like: name: pods, name: services, name: deployments. Like: name: deployments.apps, name: cronjobs.batch, name: roles.rbac.authorization.k8s.io.
+spec:
+  group: trainwithshubham.com # It is used to group related resources together. It is used to differentiate between different API groups in the same cluster. Like: group: apps, group: batch, group: rbac.authorization.k8s.io.  
+    plural: devopsbatches # It is used to refer to a collection of the custom resource. Like: plural: pods, plural: services, plural: deployments. Like: plural: pods, plural: services, plural: deployments.
+    singular: devopsbatch # It is used to refer to a single instance of the custom resource. Like: singular: pod, singular: service, singular: deployment.
+    kind: DevOpsBatch  # It is used to define the kind of the custom resource. It is used to differentiate between different kinds of resources in the same API group. Like kind: Deployment, kind: Service, kind: Pod.
+    shortNames: # It is used to create a short name for the custom resource. It is optional and can be omitted if not needed. Like service - svc, deployment - deploy.
+      - junoon
+      - batches
+      - tws
+  scope: Namespaced # It is used to specify the scope of the custom resource. Like: Namespaced, Cluster. If the scope is Namespaced, the custom resource will be created in a specific namespace. If the scope is Cluster, the custom resource will be created at the cluster level and will be accessible across all namespaces.
+  versions:
+  - name: v1 # It is the version of the custom resource. It is used to differentiate between different versions of the same custom resource.
+    served: true # It indicates whether this version of the custom resource is served by the API server. If set to true, the API server will handle requests for this version of the custom resource.
+    storage: true # It indicates whether this version of the custom resource is used for storing the resource in etcd. If set to true, this version will be used for persisting the resource in the cluster's storage.
+    schema:
+      openAPIV3Schema: # It is a schema that defines the structure of the custom resource. It is used for validation and documentation purposes.
+        type: object # It is used to define the type of the custom resource. It can be object, array, string, number, boolean, etc. In this case, it is an object because the custom resource has multiple fields and properties.
+        properties: # It is used to define the properties of the custom resource. Each property has a name, type, and description. It is used for validation and documentation purposes.
+          spec: # It is used to define the specification of the custom resource. It contains the desired state and configuration of the resource. It is used for validation and documentation purposes.
+            type: object 
+            properties:
+              name: # It is used to define the name of the DevOps Batch. It is a string property that represents the name of the batch. It is used for validation and documentation purposes.
+                type: string # In this case, it is a string because the name is a text value.
+                description: "This is the name of the DevOps Batch" # It is used to provide a description of the name property. It is used for validation and documentation purposes.
+              duration: # It is used to define the duration of the DevOps Batch. It is a string property that represents the duration of the batch. It is used for validation and documentation purposes.
+                type: string 
+                description: "This is the duration of the DevOps Batch" 
+              mode: # It is used to define the mode of the DevOps Batch. It is a string property that represents the mode of the batch. It is used for validation and documentation purposes.
+                type: string
+                description: "This is the mode of the batch eg. Live/Recorded" 
+              platform: # It is used to define the platform of the DevOps Batch. It is a string property that represents the platform of the batch. It is used for validation and documentation purposes.
+                type: string
+                description: "This is the platform of the batch"
