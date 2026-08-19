@@ -3,6 +3,17 @@
 This guide explains the main Helm concepts and commands in more detail. Use
 [README.md](README.md) for the short command-based version.
 
+## Before you begin
+
+Make sure a Kubernetes cluster is running and that `kubectl` is connected to
+the correct cluster. Helm uses the same kubeconfig and current context as
+`kubectl`.
+
+```bash
+kubectl config current-context
+kubectl get nodes
+```
+
 ## 1. What is Helm?
 
 Helm is a package manager for Kubernetes. A Helm package is called a **chart**.
@@ -10,6 +21,9 @@ A chart contains templates for Kubernetes resources and default values.
 
 Helm creates a **release** whenever a chart is installed. The same chart can be
 installed many times with different release names, namespaces, or values.
+
+The chart is the package you install. The release is the running instance of
+that chart in a Kubernetes cluster.
 
 ```text
 Chart: apache-helm
@@ -153,6 +167,10 @@ helm upgrade --install my-app ./my-app \
   -f values-prod.yaml
 ```
 
+The values file path is relative to your current directory. Run the command
+from the directory that contains both `my-app/` and `values-prod.yaml`, or use
+the full path to the values file.
+
 ### `--set`
 
 Use `--set` for a small temporary override:
@@ -171,6 +189,9 @@ values.yaml < values-dev.yaml < values-prod.yaml < --set
 ```
 
 Later values override earlier values.
+
+When using multiple files, specify them in the same order as the precedence
+shown above. Values supplied with `--set` override values from the files.
 
 ### Conditionals
 
@@ -250,7 +271,13 @@ helm template my-app ./my-app -f values-prod.yaml > rendered.yaml
 kubectl apply --dry-run=client -f rendered.yaml
 ```
 
+This checks the rendered resource format locally. It does not create resources
+and does not replace a real cluster-side validation.
+
 ## 6. Install and inspect releases
+
+Use a unique release name in each namespace. The release name is used later
+with commands such as `helm status`, `helm upgrade`, and `helm uninstall`.
 
 Install a chart from a directory:
 
@@ -400,6 +427,9 @@ subchart's values documentation before configuring it.
 
 ## 11. Package and publish charts
 
+Increase the chart `version` in `Chart.yaml` before packaging a changed chart.
+The package filename includes that version.
+
 Package a chart:
 
 ```bash
@@ -421,6 +451,9 @@ Push a package to an OCI registry:
 helm registry login registry.example.com
 helm push ./packages/my-app-0.1.0.tgz oci://registry.example.com/helm
 ```
+
+Replace `registry.example.com` with your registry address. The registry must
+support OCI artifacts, and you must have permission to push to it.
 
 ## 12. Hooks and tests
 
