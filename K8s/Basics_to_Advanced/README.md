@@ -35,3 +35,9 @@
 16. CRD
 
 17. Helm
+
+18. Others
+
+19. SideCar and Init Container
+
+20. Service Mesh Istio
