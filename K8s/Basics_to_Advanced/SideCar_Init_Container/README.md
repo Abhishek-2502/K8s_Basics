@@ -35,11 +35,23 @@ View logs from the init container:
 ```bash
 kubectl logs init-test -c init-container
 ```
+Output:
+
+```text
+Initalization started ...
+Initization completed.
+```
 
 View logs from the main container:
 
 ```bash
 kubectl logs init-test -c main-container
+```
+
+Output:
+
+```text
+Main container started
 ```
 
 To watch logs continuously:
@@ -79,10 +91,21 @@ View logs from the main container:
 kubectl logs sidecar-test -c main-container
 ```
 
+Output: No output. The main container writes its messages to the shared log
+file instead of writing them to standard output.
+
 View the log stream from the sidecar container:
 
 ```bash
 watch kubectl logs sidecar-test -c sidecar-container
+```
+
+Example output:
+
+```text
+Hello Dosto
+Hello Dosto
+...
 ```
 
 Delete the Pod after testing:
