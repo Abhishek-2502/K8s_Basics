@@ -3,3 +3,6 @@ chmod 777 shell_filename.sh -> Giving Permission
 
 watch <command> -> Runs a command repeatedly and refreshes output
 sudo -E <command> -> Runs command as sudo preserving environment variables
+<command> & -> Runs command in background without blocking the terminal
+jobs -l -> List background running commands
+kill %1 -> Kill first background running command

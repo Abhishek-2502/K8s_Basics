@@ -360,3 +360,11 @@ helm uninstall dev-node-js-app -n dev-node-ns
 
 Use the same release name and namespace used during installation. Uninstalling
 a release does not delete the chart package from the local machine or registry.
+
+## Cleanup
+```bash
+kubectl delete ns prd-apache-ns
+kubectl delete ns dev-apache-ns
+kubectl delete ns dev-node-ns
+kubectl delete ns mongodb-ns
+```

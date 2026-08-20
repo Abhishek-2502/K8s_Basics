@@ -62,14 +62,16 @@ kubectl -n kubernetes-dashboard create token admin-user
 Copy the token for use in the Dashboard login.
 
 
-**4.5** Find VM Username
+**4.5 SSH TUNNEL**
+
+**4.5.1** Find VM Username
 
 ```bash
 
 whoami
 ```
 
-**4.6** Generate an SSH key on your Local Machine
+**4.5.2** Generate an SSH key on your Local Machine
 
 On your local Windows machine, open Git Bash or another Linux-based terminal:
 ```bash
@@ -99,7 +101,7 @@ cat ~/.ssh/id_rsa.pub
 
 Copy the entire line, which looks like: `ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQ... abhishek@IN-5PTMSF4-W1`
 
-**4.7** Add Public Key to the VM
+**4.5.3** Add Public Key to the VM
 
 On the VM at home/your_username:
 
@@ -129,7 +131,7 @@ Give Permissions:
 chmod 600 ~/.ssh/authorized_keys
 ```
 
-**4.8** Create an SSH Tunnel
+**4.5.4** Create an SSH Tunnel
 
 > Important: Port 8001 does not need to be opened in the GCP firewall. The SSH tunnel securely forwards the port from your local machine to the VM.
 
@@ -139,7 +141,7 @@ From your local machine, run:
 ssh -i ~/.ssh/id_rsa   -L 8001:localhost:8001   VM_Username@VM_IP
 ```
 
-**4.9** Access the Dashboard
+**4.6** Access the Dashboard
 
 Start the Dashboard using kubectl proxy on VM:
 
@@ -148,7 +150,7 @@ Start the Dashboard using kubectl proxy on VM:
 kubectl proxy &
 ```
 
-**4.10** Open the Dashboard in your browser:
+**4.7** Open the Dashboard in your browser:
 
 ```bash
 
