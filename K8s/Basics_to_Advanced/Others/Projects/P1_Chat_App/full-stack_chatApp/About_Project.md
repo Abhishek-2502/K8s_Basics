@@ -72,7 +72,7 @@ PORT=5001
 ### Clone the Repository
 
 ```bash
-git clone https://github.com/iemafzalhassan/full-stack_chatApp.git
+git clone https://github.com/Abhishek-2502/Docker_K8s
 ```
 
 ## 🏗️ Build and Run the Application"
@@ -100,7 +100,7 @@ http://localhost
 Follow these simple steps to get the project up and running on your local Host using docker.
 
 ```bash
-git clone https://github.com/iemafzalhassan/full-stack_chatApp.git
+git clone https://github.com/Abhishek-2502/Docker_K8s.git
 ```
 
 ```bash
@@ -186,6 +186,5 @@ You can now interact with the real-time chat app and start messaging!
 
 
 ## 📜 License
-
 
 This project is licensed under the MIT License. See the LICENSE file for more details.
