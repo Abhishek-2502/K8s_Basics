@@ -62,7 +62,7 @@ kubectl -n kubernetes-dashboard create token admin-user
 Copy the token for use in the Dashboard login.
 
 
-**4.5 SSH TUNNEL**
+**4.5 SSH TUNNEL (If Setting Kind on Cloud)**
 
 **4.5.1** Find VM Username
 
