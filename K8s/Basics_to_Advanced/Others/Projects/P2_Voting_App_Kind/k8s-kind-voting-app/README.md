@@ -19,6 +19,10 @@ kubectl port-forward svc/result 5001:5001 --address=0.0.0.0
 
 ```
 
+- Access Vote Service on <http://VM_IP:5000>
+
+- Access Result Service on <http://VM_IP:5001>
+
 ## Architecture
 
 ![Architecture diagram](images/k8s-kind-voting-app.png)
