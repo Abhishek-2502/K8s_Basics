@@ -49,6 +49,8 @@
 ### Youtube
  - [M Prashant](https://www.youtube.com/watch?v=rBeyHDKLVqM)
  - [TWS](https://www.youtube.com/watch?v=W04brGNgxN4)
+ - [TWS_Deployment_Stategies](https://www.youtube.com/watch?v=_T3vfkl-3Vk)
+
 
 ### Github
  - https://github.com/LondheShubham153/kubestarter

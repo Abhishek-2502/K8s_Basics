@@ -42,4 +42,6 @@
 
 20. Service Mesh Istio
 
-21. Others/Projects
+21. Deployment Strategies
+
+22. Others/Projects
