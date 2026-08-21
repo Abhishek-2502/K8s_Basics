@@ -1,0 +1,44 @@
+version: '3.8'
+services:
+  mongodb:
+    image: iemafzal/f-s_mongodb:v1
+    volumes:
+      - mongo-data:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=mongoadmin
+      - MONGO_INITDB_ROOT_PASSWORD=secret
+    ports:
+      - "27017:27017"
+    networks:
+      - fullstack-chatapp
+
+  backend:
+    image: iemafzal/f-s_backend:v1
+    container_name: full-stack_backend
+    environment:
+      - NODE_ENV=production
+      - MONGODB_URI=mongodb://mongoadmin:secret@mongodb:27017/dbname?authSource=admin
+      - JWT_SECRET=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJPbmxpbmUgSldUIEJ1aWxkZXIiLCJpYXQiOjE3MzI2NTMxMDcsImV4cCI6MTc2NDE4OTEwNywiYXVkIjoid3d3LmV4YW1wbGUuY29tIiwic3ViIjoianJvY2tldEBleGFtcGxlLmNvbSIsIkdpdmVuTmFtZSI6IkpvaG5ueSIsIlN1cm5hbWUiOiJSb2NrZXQiLCJFbWFpbCI6Impyb2NrZXRAZXhhbXBsZS5jb20iLCJSb2xlIjpbIk1hbmFnZXIiLCJQcm9qZWN0IEFkbWluaXN0cmF0b3IiXX0.qE3lxrcV9TM3nujRqJVeCHPd_4WFPO9eVZj8A_kjabI
+      - PORT=5001
+    depends_on:
+      - mongodb
+    networks:
+      - fullstack-chatapp
+
+  frontend:
+    image: iemafzal/f-s_frontend:v1
+    container_name: full-stack_frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - fullstack-chatapp
+
+networks:
+  fullstack-chatapp:
+    driver: bridge
+
+volumes:
+  mongo-data:
+

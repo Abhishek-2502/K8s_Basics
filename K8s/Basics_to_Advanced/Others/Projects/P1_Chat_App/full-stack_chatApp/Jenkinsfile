@@ -1,0 +1,39 @@
+pipeline {
+  agent any
+
+  environment {
+    SONAR_HOME = tool "sonarqube"
+  }
+
+  stages {
+    stage('Clean UP') {
+      steps {
+        cleanWs()
+      }
+    }
+    stage('Code Check out') {
+      steps {
+        git branch: 'main',
+          url: 'https://github.com/Abhishek-2502/Docker_K8s.git'
+      }
+    }
+    stage('Code Quality') {
+      steps {
+        dir('K8s/Basics_to_Advanced/Others/Projects/P1_Chat_App/full-stack_chatApp') {
+          withSonarQubeEnv("sonarqube") {
+            sh "$SONAR_HOME/bin/sonar-scanner -Dsonar.projectName=chat-app -Dsonar.projectKey=chat-app -X"
+          }
+        }
+      }
+    }
+    stage('Deploy') {
+      steps {
+        script {
+          dir('K8s/Basics_to_Advanced/Others/Projects/P1_Chat_App/full-stack_chatApp') {
+            sh 'docker compose up -d --build'
+          }
+        }
+      }
+    }
+  }
+}
