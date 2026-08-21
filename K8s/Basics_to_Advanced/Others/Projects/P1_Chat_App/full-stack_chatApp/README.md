@@ -35,6 +35,8 @@ cd ../k8s
 ## Deploy to Kubernetes
 
 ```bash
+kubectl get nodes
+
 minikube addons enable ingress
 kubectl apply -f namespace.yml
 kubectl get ns
@@ -47,16 +49,19 @@ kubectl get pvc -n chat-app
 
 kubectl apply -f secrets.yml
 
+kubectl apply -f mongodb-service.yml
 kubectl apply -f mongodb-deployment.yml
-kubectl apply -f backend-deployment.yml
+kubectl rollout status deployment/mongodb-deployment -n chat-app
 kubectl get pods -n chat-app
 
 kubectl apply -f backend-service.yml
-kubectl apply -f frontend-service.yml
-kubectl apply -f mongodb-service.yml
+kubectl apply -f backend-deployment.yml
+kubectl rollout status deployment/backend-deployment -n chat-app
 kubectl get svc -n chat-app
 
+kubectl apply -f frontend-service.yml
 kubectl apply -f frontend-deployment.yml
+kubectl rollout status deployment/frontend-deployment -n chat-app
 kubectl get pods -n chat-app
 
 kubectl apply -f ingress.yml
@@ -64,20 +69,23 @@ kubectl get ing -n chat-app
 
 ```
 
-## Restart the Backend Deployment
+## Restart Deployments
 
-Because the backend uses the reusable `:latest` image tag, restart the deployment after pushing a new backend image:
+Because the backend and frontend use the reusable `:latest` image tag, restart the corresponding deployment after pushing a new image:
 
 ```bash
 kubectl rollout restart deployment/backend-deployment -n chat-app
 kubectl rollout status deployment/backend-deployment -n chat-app
+
+kubectl rollout restart deployment/frontend-deployment -n chat-app
+kubectl rollout status deployment/frontend-deployment -n chat-app
 ```
 
 ## Open the App
 
 Add the ingress hostname to the hosts file.
 
-**Windows:** Edit `C:\Windows\System32\drivers\etc\hosts` as Administrator (Open Notepade as Admin and open this file) and add:
+**Windows:** Edit `C:\Windows\System32\drivers\etc\hosts` as Administrator (open Notepad as Administrator) and add:
 
 ```text
 127.0.0.1 chat-tws.com

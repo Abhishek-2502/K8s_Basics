@@ -17,7 +17,8 @@ spec:
     spec:
       containers:
       - name: chatapp-frontend
-        image: abhi25022004/chatapp-frontend
+        image: abhi25022004/chatapp-frontend:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 80
         env:
