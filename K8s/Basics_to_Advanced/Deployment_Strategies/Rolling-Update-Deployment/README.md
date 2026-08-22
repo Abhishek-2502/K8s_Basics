@@ -39,6 +39,7 @@
 - Apply all the manifest files present in the current directory.
 
     ```bash
+    kubectl apply -f rolling-namespace.yml
     kubectl apply -f .
     ```
 
@@ -69,13 +70,13 @@
 - You have successfully accessed the `online_shop with footer` webpage. Now edit the deployment file and change the image from <b>`online_shop`</b> to <b>`online_shop_without_footer`</b> and apply.
 
     ```bash
-    kubectl apply -f . 
+    kubectl apply -f recreate-deployment.yml
     ```
 
-- or, You can only apply deployment file
+- or, You can directly change image through kubectl command:
 
     ```bash
-    kubectl apply -f rolling-deployment.yml
+    kubectl set image deployment/online-shop online-shop=amitabhdevops/online_shop_without_footer -n rolling-ns
     ```
 
 - Immediately go to second tab where ran watch command and monitor (It will delete all the pods and then create new ones).
@@ -84,11 +85,9 @@
 
 ## Cleanup
 
-- Deleting Kind Cluster:
-
-    ```bash
-    kind delete cluster --name dep-strg
-    ```
+```bash
+kubectl delete -f .
+```
 
 ---
 

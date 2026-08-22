@@ -33,7 +33,7 @@ metadata:
   namespace: blue-green-ns
 spec:
   selector:
-    app: online-shop-blue
+    app: online-shop-green
   type: NodePort
   ports:
     - protocol: TCP

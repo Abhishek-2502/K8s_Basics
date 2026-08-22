@@ -149,11 +149,9 @@
 
 ## Cleanup
 
-- Deleting Kind Cluster:
-
-    ```bash
-    kind delete cluster --name dep-strg
-    ```
+```bash
+kubectl delete -f .
+```
 
 ---
 
