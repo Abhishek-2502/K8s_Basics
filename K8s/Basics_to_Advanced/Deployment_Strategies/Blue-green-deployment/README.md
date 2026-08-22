@@ -16,7 +16,7 @@
 | Instant rollout/rollback | Requires double the resources    |
 | Avoid versioning issue, change entire cluster state in one go | Proper test of entire platform should be done before releasing to the production environment. |
 
-> [!Note]
+> Note:
 >
 > This deployment strategy is suitable for Production environment.
 
@@ -26,19 +26,13 @@
 
 ### Prerequisites to try this:
 
-1. EC2 Instance with Ubuntu OS
+1. Instance with Ubuntu OS
 
 2. Docker installed & Configured
 
 3. Kind Installed
 
 4. Kubectl Installed
-
-5. Kind Cluster running(Use `kind-config.yml` file present in this root directory.)
-
->   [!NOTE]
-> 
->   You have to go inside root dir of this repo and create Kind Cluster using command: `kind create cluster --config kind-config.yml --name dep-strg`
 
 ---
 
@@ -77,7 +71,7 @@
     kubectl port-forward --address 0.0.0.0 svc/online-shop-blue-deployment-service 30001:3001 -n blue-green-ns &
     ```
 
-- Open the inbound rule for port 30001 in that EC2 Instance and check the application(without footer online shop) at URL:
+- Open the inbound rule for port 30001 in that Instance and check the application(without footer online shop) at URL:
 
     ```bash
     http://<Your_Instance_Public_Ip>:30001
@@ -95,7 +89,7 @@
     kubectl port-forward --address 0.0.0.0 svc/online-shop-green-deployment-service 30000:3000 -n blue-green-ns &
     ```
 
-- Open the inbound rule for port 30000 in that EC2 Instance and check the application(With footer online shop) at URL:
+- Open the inbound rule for port 30000 in that Instance and check the application(With footer online shop) at URL:
 
     ```bash
     http://<Your_Instance_Public_Ip>:30000
@@ -106,7 +100,7 @@
     ![image](https://github.com/user-attachments/assets/03409f86-c206-4255-b04b-3d8c9d3741a9)
 
 
->   [!Note]
+>   Note:
 >
 >   Check the URL and port carefully 
 
@@ -163,7 +157,7 @@
 
 ---
 
-> [!Note]
+> Note:
 >
 > If you cannot access the web app after the update, check your terminal — you probably encountered an error like:
 >

@@ -23,7 +23,7 @@
 | Version released for subset of users | Slow rollout    |
 | Convenient for error rate and performance monitoring | Fine tune traffic distribution can be expensive |
 
-> [!Note]
+> Note:
 > This deployment strategy is suitable for Production environment.
 
 ![image](https://github.com/user-attachments/assets/5d08039b-e06b-4c08-aaff-b68dc435d570)
@@ -42,19 +42,13 @@ In this example:
 
 ### Prerequisites to try this:
 
-1. EC2 Instance with Ubuntu OS
+1. Instance with Ubuntu OS
 
 2. Docker installed & Configured
 
 3. Kind Installed
 
 4. Kubectl Installed
-
-5. Kind Cluster running(Use `kind-config.yml` file present in this directory.)
-
->   [!NOTE]
-> 
->   You have to go inside root dir of this repo and create Kind Cluster using command: `kind create cluster --config kind-config.yml --name dep-strg`
 
 ---
 
@@ -176,7 +170,7 @@ Then access `http://<Instance_Ip>:8080` multiple times, You should see:
 
 ---
 
-> [!Note]
+> Note:
 >
 > If you cannot access the web app after the update, check your terminal — you probably encountered an error like:
 >

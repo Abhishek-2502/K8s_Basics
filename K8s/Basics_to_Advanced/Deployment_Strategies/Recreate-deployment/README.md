@@ -12,7 +12,7 @@
 | -------- | ------- |
 | Application state entirely renewed | Downtime that depends on the both shutdown and boot duration of the application     |
 
-> [!Note]
+> Note:
 > This deployment strategy is suitable for development environment.
 
 ![image](https://github.com/user-attachments/assets/90197afc-a892-47d5-9160-c4543b64defa)
@@ -21,19 +21,13 @@
 
 ### Prerequisites to try this:
 
-1. EC2 Instance with Ubuntu OS
+1. Instance with Ubuntu OS
 
 2. Docker installed & Configured
 
 3. Kind Installed
 
 4. Kubectl Installed
-
-5. Kind Cluster running(Use `kind-config.yml` file present in this directory.)
-
->   [!NOTE]
-> 
->   You have to go inside root dir of this repo and create Kind Cluster using command: `kind create cluster --config kind-config.yml --name dep-strg`
 
 ---
 
@@ -51,19 +45,19 @@
     kubectl get all -n recreate-ns
     ```
 
-- Forward the svc port to the EC2 instance port 3000
+- Forward the svc port to the instance port 3000
 
     ```bash
     kubectl port-forward --address 0.0.0.0 svc/recreate-service 3000:3000 -n recreate-ns &
     ```
 
-- Open the inbound rule for port 3000 in that EC2 Instance and check the application at URL:
+- Open the inbound rule for port 3000 in that Instance and check the application at URL:
 
     ```bash
     http://<Your_Instance_Public_Ip>:3000
     ```
 
-- Open a new tab of terminal and connect your EC2 instance and run the watch command to monitor the deployment
+- Open a new tab of terminal and connect your instance and run the watch command to monitor the deployment
 
     ```bash
     watch kubectl get pods -n recreate-ns
@@ -98,7 +92,7 @@
 
 ---
 
-> [!Note]
+> Note:
 >
 > If you cannot access the web app after the update, check your terminal — you probably encountered an error like:
 >
