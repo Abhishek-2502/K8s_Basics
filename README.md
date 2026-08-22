@@ -41,6 +41,7 @@
  - Helm
  - SideCar/Init Container
  - Istio Service Mesh
+ - Deployment Strategies
 
 
 # Resources
