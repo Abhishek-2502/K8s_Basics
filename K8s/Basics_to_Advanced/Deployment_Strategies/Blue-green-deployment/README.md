@@ -100,9 +100,7 @@
     ![image](https://github.com/user-attachments/assets/03409f86-c206-4255-b04b-3d8c9d3741a9)
 
 
->   Note:
->
->   Check the URL and port carefully 
+>   Note: Check the URL and port carefully 
 
 ---
 
