@@ -16,9 +16,7 @@
 | Instant rollout/rollback | Requires double the resources    |
 | Avoid versioning issue, change entire cluster state in one go | Proper test of entire platform should be done before releasing to the production environment. |
 
-> Note:
->
-> This deployment strategy is suitable for Production environment.
+> Note: This deployment strategy is suitable for Production environment.
 
 ![image](https://github.com/user-attachments/assets/ad967289-f554-473b-ba67-4953e57270c2)
 

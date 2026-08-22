@@ -23,8 +23,7 @@
 | Version released for subset of users | Slow rollout    |
 | Convenient for error rate and performance monitoring | Fine tune traffic distribution can be expensive |
 
-> Note:
-> This deployment strategy is suitable for Production environment.
+> Note: This deployment strategy is suitable for Production environment.
 
 ![image](https://github.com/user-attachments/assets/5d08039b-e06b-4c08-aaff-b68dc435d570)
 
@@ -171,12 +170,9 @@ Then access `http://<Instance_Ip>:8080` multiple times. You should see:
 
 ## Cleanup
 
-- Deleting Kind Cluster:
-
-    ```bash
-    kind delete cluster --name dep-strg
-    ```
-
+```bash
+kubectl delete -f .
+```
 ---
 
 > Note:

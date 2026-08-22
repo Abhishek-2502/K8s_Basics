@@ -12,8 +12,7 @@
 | -------- | ------- |
 | Application state entirely renewed | Downtime that depends on the both shutdown and boot duration of the application     |
 
-> Note:
-> This deployment strategy is suitable for development environment.
+> Note: This deployment strategy is suitable for development environment.
 
 ![image](https://github.com/user-attachments/assets/90197afc-a892-47d5-9160-c4543b64defa)
 
