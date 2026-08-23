@@ -36,7 +36,7 @@
 
 17. Helm
 
-18. Others
+18. Others (Kubernetes Operator, Image Scanning, Kubernetes API and Kopf)
 
 19. SideCar and Init Container
 
@@ -45,3 +45,5 @@
 21. Deployment Strategies
 
 22. Others/Projects
+
+23. Kustomize

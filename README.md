@@ -42,6 +42,24 @@
  - SideCar/Init Container
  - Istio Service Mesh
  - Deployment Strategies
+ - Kustomize
+
+### Other Topics (not in repo)
+
+ - ClusterIP vs NodePort vs LoadBalancer vs External
+ - Network Policies
+ - Container Network Interface (CNI)
+ - DNS, CoreDNS, SSL/TLS
+ - ETCS Backup and Restore
+ - Pod Priority and Preemption
+ - Kubernetes Gateway API
+ - Migrate Ingress to Gateway API
+ - Kubernetes Admission Controller
+ - KRO (Kubernetes Resource Orchestrator)
+ - Helm vs Kustomize vs KRO
+ - Resource Graph Definition (RCD)
+ - Directed Acyclic Graph (DAG)
+ - Kube Builder
 
 
 # Resources
