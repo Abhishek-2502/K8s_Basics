@@ -33,6 +33,16 @@ Copying complete YAML files causes drift. Kustomize keeps valid Kubernetes YAML 
 | No templating language required | Strong package and release-management features |
 | Built into `kubectl` | Requires Helm CLI |
 | Excellent for repository-local overlays | Excellent for reusable charts and third-party distribution |
+| Changes are made using patches and transformers | Changes are made using templates and values |
+| Usually easier to read because the output stays close to normal YAML | Can become harder to read when templates contain complex logic |
+| Does not manage releases or release history by itself | Tracks releases, revisions, and installed chart versions |
+| Rollback is normally handled with Git or `kubectl rollout undo` | Supports chart release rollback with `helm rollback` |
+| Best when the application manifests already exist in your repository | Best when packaging and distributing an application is important |
+| Overlays are commonly stored as folders such as `overlays/dev` and `overlays/prod` | Environments are commonly configured through separate values files |
+| No central chart repository is required | Charts can be published to and installed from chart repositories or OCI registries |
+| Debugging starts by inspecting rendered YAML with `kubectl kustomize` | Debugging often uses `helm template` or `helm install --dry-run --debug` |
+| Secret generators create Kubernetes Secret manifests but do not encrypt them | Helm templates can create Secret manifests but also do not encrypt them automatically |
+| Small focused customizations are straightforward | Large applications can benefit from Helm's reusable chart helpers |
 
 They can also be used together. For example, Kustomize can customize YAML rendered by a Helm chart.
 
