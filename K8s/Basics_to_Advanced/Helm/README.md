@@ -30,6 +30,17 @@ helm version
 helm
 ```
 
+## Install Helm on Windows
+
+Run the following commands to install Helm on a Windows machine using chocolatey.
+After installation, check the Helm version to confirm that it is working.
+
+```bash
+choco install kubernetes-helm -y
+helm version
+helm
+```
+
 ## Apache Helm Chart
 
 ### Create the Chart
