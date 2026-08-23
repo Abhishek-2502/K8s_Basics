@@ -149,10 +149,15 @@ kubectl apply -k demo/overlays/prod
 kubectl get all -n training-dev
 # List resources created in prod.
 kubectl get all -n training-prod
+
 # List the generated dev ConfigMap.
 kubectl get configmap -n training-dev
+
+
 # Describe the dev Deployment.
 kubectl describe deployment dev-web -n training-dev
+# Describe the Prod Deployment.
+kubectl describe deployment prod-web -n training-prod
 
 # Preview changes after editing a base or overlay, without applying them.
 kubectl diff -k demo/overlays/dev
@@ -288,6 +293,7 @@ Edit `demo/overlays/dev/kustomization.yaml` and change `count` from `1` to `2`:
 ```bash
 # Render the dev overlay and inspect the configured replica count.
 kubectl kustomize demo/overlays/dev | grep -A20 'kind: Deployment' | grep 'replicas:'
+
 # Apply the updated dev overlay to the cluster.
 kubectl apply -k demo/overlays/dev
 # Read the desired replica count from the live Deployment.
@@ -301,6 +307,7 @@ Edit `demo/overlays/prod/kustomization.yaml` and change `newTag`, for example fr
 ```bash
 # Render the prod overlay and confirm the new image tag.
 kubectl kustomize demo/overlays/prod | grep 'image:'
+
 # Preview the changes without applying them.
 kubectl diff -k demo/overlays/prod
 # Apply the reviewed prod changes.
@@ -333,6 +340,8 @@ Render and verify that the overlay value wins:
 ```bash
 # Render the dev ConfigMap and confirm the overlay value is present.
 kubectl kustomize demo/overlays/dev | grep -A5 'kind: ConfigMap'
+
+
 # Apply the updated ConfigMap to dev.
 kubectl apply -k demo/overlays/dev
 # Read APP_MESSAGE from the generated ConfigMap.
@@ -379,6 +388,7 @@ Check that only prod contains the policy:
 kubectl kustomize demo/overlays/prod | grep -A3 'kind: NetworkPolicy'
 # Confirm that dev does not contain the prod-only policy.
 kubectl kustomize demo/overlays/dev | grep 'kind: NetworkPolicy' || echo 'No NetworkPolicy in dev'
+
 # Apply the policy to prod.
 kubectl apply -k demo/overlays/prod
 # List NetworkPolicies installed in prod.
@@ -417,6 +427,9 @@ Render and inspect the result:
 ```bash
 # Render the dev overlay and confirm FEATURE_FLAG is present.
 kubectl kustomize demo/overlays/dev | grep -A3 'FEATURE_FLAG'
+# Render the prod overlay and confirm FEATURE_FLAG is not present.
+kubectl kustomize demo/overlays/prod | grep -A3 'FEATURE_FLAG' || echo 'Not present in prod'
+
 # Apply the environment variable to the dev Deployment.
 kubectl apply -k demo/overlays/dev
 # Read FEATURE_FLAG from the live Deployment.
@@ -468,6 +481,8 @@ patches:
 Build and apply the new environment:
 
 ```bash
+# Create the staging namespace; the generated YAML is applied to the cluster.
+kubectl create namespace training-staging --dry-run=client -o yaml | kubectl apply -f -
 # Render staging without changing the cluster.
 kubectl kustomize demo/overlays/staging
 # Apply the staging resources.
@@ -505,36 +520,3 @@ kubectl get secret dev-web-secret-<hash> -n training-dev -o jsonpath='{.data.DEM
 ```
 
 Replace `<hash>` with the suffix shown by `kubectl get secret`. The value is base64 encoded, not encrypted. Never commit real credentials; use an external solution such as a cloud secret manager, External Secrets Operator, or Sealed Secrets for real workloads.
-
-### 8. Validate every overlay in CI
-
-Create `.github/workflows/kustomize.yml` from the repository root:
-
-```yaml
-name: Validate Kustomize
-
-on:
-  pull_request:
-  push:
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: azure/setup-kubectl@v4
-        with:
-          version: latest
-      - name: Render Kustomize overlays
-        shell: bash
-        run: |
-          set -euo pipefail
-          for path in K8s/Basics_to_Advanced/Kustomize/demo/base K8s/Basics_to_Advanced/Kustomize/demo/overlays/*; do
-            echo "Rendering ${path}"
-            kubectl kustomize "${path}" > /dev/null
-          done
-```
-
-The workflow fails automatically when any base or overlay cannot be rendered.
-
-Kustomize is declarative: describe the desired final resource graph, render it, review it, and let Kubernetes reconcile it.
