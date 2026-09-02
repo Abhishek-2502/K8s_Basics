@@ -1,0 +1,9 @@
+## Install Rancher
+docker run -d --restart=unless-stopped -p 80:80 -p 443:443 --privileged rancher/rancher:latest
+
+docker ps
+
+docker logs <container_id> 2>&1 | grep "Bootstrap Password:"
+
+Example: 
+docker logs af06b8ad0285 2>&1 | grep "Bootstrap Password:"
